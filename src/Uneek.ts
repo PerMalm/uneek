@@ -12,18 +12,24 @@ export interface Pair<A, B> {
 
 export const Pair = <A, B>(a: A, b: B) => ({a, b})
 
-export function VectorPair<A, B>(a: VectorOf<A>, b: VectorOf<B>, def_a: A, def_b: B): VectorOf<Pair<A, B>> {
+export function VectorPairOf<A, B>(a: VectorOf<A>, b: VectorOf<B>, def_a: A, def_b: B): VectorOf<Pair<A, B>> {
   return record_create(keysof(a, b), k => Pair(or(a[k], def_a), or(b[k], def_b)))
 }
 
+export type VectorPair = VectorOf<Pair<number, number>>
+export const VectorPair = (a: Vector, b: Vector): VectorPair => VectorPairOf(a, b, 0, 0)
+
 export type Status = 'A' | 'B' | 'Both'
-export function Compare(a: Vector, b: Vector): StatusVector {
-  return record_map(VectorPair(a, b, 0, 0), ({a, b}) => a == 0 ? 'B' : b == 0 ? 'A' : 'Both')
+export const Compare = (a: Vector, b: Vector) => ComparePairs(VectorPair(a, b))
+
+export function ComparePairs(ab: VectorPair): StatusVector {
+  return record_map(ab, ({a, b}) => a == 0 ? 'B' : b == 0 ? 'A' : 'Both')
 }
 
 // is this thing unique in a?
-export function Unique(a: Vector, b: Vector): Record<string, boolean> {
-  return record_map(VectorPair(a, b, 0, 0), ({a, b}) => a > 0 && b == 0)
+export const Unique = (a: Vector, b: Vector) => UniquePairs(VectorPair(a, b))
+export function UniquePairs(ab: VectorPair): Record<string, boolean> {
+  return record_map(ab, ({a, b}) => a > 0 && b == 0)
 }
 
 export function zero(x: number | undefined): boolean {
