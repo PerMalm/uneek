@@ -1,31 +1,40 @@
-
-export type Vector = Record<string, number>
 export type Text = Record<string, Vector>
 
-export function keysof(...objs: Record<string, any>[]) {
-  return uniq(([] as string[]).concat(...objs.map(obj => Object.keys(obj))))
+export type VectorOf<A> = Record<string, A>
+export type Vector = VectorOf<number>
+
+export type StatusVector = VectorOf<Status>
+
+export interface Pair<A, B> {
+  a: A,
+  b: B
 }
 
-export type StatusVector = Record<string, Status>
+export const Pair = <A, B>(a: A, b: B) => ({a, b})
+
+export function VectorPair<A, B>(a: VectorOf<A>, b: VectorOf<B>, def_a: A, def_b: B): VectorOf<Pair<A, B>> {
+  return record_create(keysof(a, b), k => Pair(or(a[k], def_a), or(b[k], def_b)))
+}
 
 export type Status = 'A' | 'B' | 'Both'
 export function Compare(a: Vector, b: Vector): StatusVector {
-  const au = Unique(a, b)
-  const bu = Unique(b, a)
-  const ks = keysof(au, bu)
-  return record_create(ks, k => {
-    return au[k] ? 'A' : (bu[k] ? 'B' : 'Both')
-  })
+  return record_map(VectorPair(a, b, 0, 0), ({a, b}) => a == 0 ? 'B' : b == 0 ? 'A' : 'Both')
 }
 
 // is this thing unique in a?
 export function Unique(a: Vector, b: Vector): Record<string, boolean> {
-  return record_map(a, (freq, k) => zero(b[k]))
+  return record_map(VectorPair(a, b, 0, 0), ({a, b}) => a > 0 && b == 0)
 }
 
 export function zero(x: number | undefined): boolean {
   return x === undefined || x == 0
 }
+
+export function keysof(...objs: Record<string, any>[]) {
+  return uniq(([] as string[]).concat(...objs.map(obj => Object.keys(obj))))
+}
+
+export const or = <A>(u: A | undefined, a: A) => u === undefined ? a : u
 
 /** Returns a copy of the array with duplicates removed, via toString */
 export function uniq<A>(xs: A[]): A[] {

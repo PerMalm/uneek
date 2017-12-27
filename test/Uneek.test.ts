@@ -27,10 +27,12 @@ test('Unique', assert => {
   assert.deepEqual(
     Uneek.Unique(A.word, B.word), {
       apa: true,
-      bepa: false
+      bepa: false,
+      cepa: false,
     })
   assert.deepEqual(
     Uneek.Unique(B.word, A.word), {
+      apa: false,
       cepa: true,
       bepa: false
     })
@@ -49,10 +51,12 @@ test('Vectorize', assert => {
   assert.deepEqual(
     Uneek.Unique(A, B), {
       apa: true,
-      bepa: false
+      bepa: false,
+      cepa: false,
     })
   assert.deepEqual(
     Uneek.Unique(B, A), {
+      apa: false,
       cepa: true,
       bepa: false
     })
