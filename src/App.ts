@@ -23,10 +23,13 @@ export const App = (store: Store<State>) => {
 export const View = (store: Store<State>): VNode => {
   const a = store.at('a')
   const b = store.at('b')
-  const result = store.at('status_vector')
+  const result = Uneek.VectorPair(Uneek.Vectorize(a.get()), Uneek.Vectorize(b.get()))
+  // store.at('status_vector')
   return div(
-    s.css({display: 'flex'}),
+    s.classed('side-by-side'),
     s.textarea(a),
-    tags.pre(show(Uneek.Compare(Uneek.Vectorize(a.get()), Uneek.Vectorize(b.get())))),
+    tags.pre(show(Uneek.record_filter(result, ({a, b}) => b == 0))),
+    tags.pre(show(Uneek.record_filter(result, ({a, b}) => a > 0 && b > 0))),
+    tags.pre(show(Uneek.record_filter(result, ({a, b}) => a == 0))),
     s.textarea(b))
 }

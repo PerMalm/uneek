@@ -1,5 +1,6 @@
 import * as App from "./App"
 import * as snabbis from "snabbis"
+import './index.css'
 
 const root = document.getElementsByTagName('body')[0] as HTMLElement
 const reattach = snabbis.attach(root, App.Model.init, App.App)

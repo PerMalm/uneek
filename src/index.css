@@ -1,0 +1,32 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.4em;
+    background: #393838;
+    color: #4d4d4d;
+    margin: 0 auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    font-weight: 300;
+}
+
+
+.side-by-side {
+    display: flex;
+    width: 100%;
+}
+
+.side-by-side > * {
+    margin: 10px;
+    width: 20%;
+    background: white;
+}
+
+.orange {
+    background: #fb7304;
+}
