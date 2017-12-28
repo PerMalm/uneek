@@ -98,3 +98,40 @@ export function succ(x: undefined | number): number {
   return x === undefined ? 1 : x + 1
 }
 
+export function ParseXML(s: string): Document {
+  const p = new DOMParser()
+  return p.parseFromString(s, 'application/xml')
+}
+
+export function Arr<A>(xs: ArrayLike<A>): A[] {
+  const out = [] as A[]
+  for (let i = 0; i < xs.length; i++) {
+    out.push(xs[i])
+  }
+  return out
+}
+
+export function FromXML(d: Document): Text {
+  const w = d.createTreeWalker(d)
+  const r = {} as Text
+  const bump = (k: string, t: string) => {
+    r[k] = r[k] || {}
+    r[k][t] = succ(r[k][t])
+  }
+  while (w.nextNode()) {
+    const node = w.currentNode
+    if (node.nodeType == 1) {
+      const attrs = node.attributes
+      const t = (node as any).tagName || '<?>'
+      Arr(attrs).map(attr => {
+        bump(t + '.' + attr.name, attr.value)
+      })
+    } else if (node.nodeType == 3) {
+      const k = ((node.parentNode && (node.parentNode as any).tagName) || '<?>')
+      const t = node.textContent || "''"
+      bump(k, t)
+    }
+  }
+  return r
+}
+

@@ -1,5 +1,8 @@
 import * as Uneek from '../src/Uneek'
 import * as test from 'tape'
+import { JSDOM } from 'jsdom'
+
+; (global as any)['DOMParser'] = new JSDOM(``).window.DOMParser
 
 export const A = {
   word: {
@@ -69,4 +72,34 @@ test('Vectorize', assert => {
   assert.end()
 })
 
-
+test('XML', assert => {
+  const A = Uneek.FromXML(Uneek.ParseXML(`
+    <root>
+      <w pos="DT">En</w>
+      <w pos="NN">båt</w>
+    </root>
+  `))
+  const B = Uneek.FromXML(Uneek.ParseXML(`
+    <root>
+      <w pos="D">En</w>
+      <w pos="NN">filmjölk</w>
+    </root>
+  `))
+  assert.deepEqual(
+    Uneek.VectorPair(A['w'], B['w']),
+    {
+      'En': {a: 1, b: 1},
+      'båt': {a: 1, b: 0},
+      'filmjölk': {a: 0, b: 1},
+    }
+  )
+  assert.deepEqual(
+    Uneek.VectorPair(A['w.pos'], B['w.pos']),
+    {
+      'DT': {a: 1, b: 0},
+      'D': {a: 0, b: 1},
+      'NN': {a: 1, b: 1},
+    }
+  )
+  assert.end()
+})
