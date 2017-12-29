@@ -111,7 +111,10 @@ export function Arr<A>(xs: ArrayLike<A>): A[] {
   return out
 }
 
-export function FromXML(d: Document): Text {
+export function FromXML(d: Document | string): Text {
+  if (typeof d == 'string') {
+    d = ParseXML(d)
+  }
   const w = d.createTreeWalker(d)
   const r = {} as Text
   const bump = (k: string, t: string) => {
@@ -128,8 +131,8 @@ export function FromXML(d: Document): Text {
       })
     } else if (node.nodeType == 3) {
       const k = ((node.parentNode && (node.parentNode as any).tagName) || '<?>')
-      const t = node.textContent || "''"
-      bump(k, t)
+      const text = node.textContent || ""
+      tokenize(text).forEach(t => bump(k, t))
     }
   }
   return r
