@@ -1,3 +1,5 @@
+import * as Utils from './Utils'
+
 export type Text = Record<string, Vector>
 
 export type VectorOf<A> = Record<string, A>
@@ -13,7 +15,7 @@ export interface Pair<A, B> {
 export const Pair = <A, B>(a: A, b: B) => ({a, b})
 
 export function VectorPairOf<A, B>(a: VectorOf<A>, b: VectorOf<B>, def_a: A, def_b: B): VectorOf<Pair<A, B>> {
-  return record_create(keysof(a, b), k => Pair(or(a[k], def_a), or(b[k], def_b)))
+  return Utils.record_create(Utils.keysof(a, b), k => Pair(Utils.or(a[k], def_a), Utils.or(b[k], def_b)))
 }
 
 export type VectorPair = VectorOf<Pair<number, number>>
@@ -23,92 +25,30 @@ export type Status = 'A' | 'B' | 'Both'
 export const Compare = (a: Vector, b: Vector) => ComparePairs(VectorPair(a, b))
 
 export function ComparePairs(ab: VectorPair): StatusVector {
-  return record_map(ab, ({a, b}) => a == 0 ? 'B' : b == 0 ? 'A' : 'Both')
+  return Utils.record_map(ab, ({a, b}) => a == 0 ? 'B' : b == 0 ? 'A' : 'Both')
 }
 
 // is this thing unique in a?
 export const Unique = (a: Vector, b: Vector) => UniquePairs(VectorPair(a, b))
 export function UniquePairs(ab: VectorPair): Record<string, boolean> {
-  return record_map(ab, ({a, b}) => a > 0 && b == 0)
-}
-
-export function zero(x: number | undefined): boolean {
-  return x === undefined || x == 0
-}
-
-export function keysof(...objs: Record<string, any>[]) {
-  return uniq(([] as string[]).concat(...objs.map(obj => Object.keys(obj))))
-}
-
-export const or = <A>(u: A | undefined, a: A) => u === undefined ? a : u
-
-/** Returns a copy of the array with duplicates removed, via toString */
-export function uniq<A>(xs: A[]): A[] {
-  const seen = {} as Record<string, boolean>
-  return xs.filter(x => {
-    const s = x.toString()
-    const duplicate = s in seen
-    seen[s] = true
-    return !duplicate
-  })
-}
-
-export function record_forEach<K extends string, A>(x: Record<K, A>, k: (a: A, id: K) => void): void {
-  (Object.keys(x) as K[]).forEach((id: K) => k(x[id], id))
-}
-
-export function record_create<K extends string, A>(ks: K[], f: (k: K) => A): Record<K, A> {
-  const obj = {} as Record<K, A>
-  ks.forEach(k => obj[k] = f(k))
-  return obj
-}
-
-export function record_traverse<K extends string, A, B>(x: Record<K, A>, k: (a: A, id: K) => B, sort_keys: boolean=false): B[] {
-  const ks = Object.keys(x) as K[]
-  if (sort_keys) {
-    ks.sort()
-  }
-  return ks.map((id: K) => k(x[id], id))
-}
-
-export function record_map<K extends string, A, B>(x: Record<K, A>, k: (a: A, id: K) => B): Record<K, B> {
-  const out = {} as Record<K, B>
-  record_forEach(x, (a, id) => out[id] = k(a, id))
-  return out
-}
-
-export function record_filter<A>(x: Record<string, A>, k: (a: A, id: string) => boolean): Record<string, A> {
-  const out = {} as Record<string, A>
-  record_forEach(x, (a, id) => k(a, id) && (out[id] = a))
-  return out
-}
-
-/** Tokenizes text on whitespace removes all trailing whitespace  */
-export function tokenize(s: string): string[] {
-  return (s.match(/\s*\S+\s*/g) || []).map(x => x.trim())
+  return Utils.record_map(ab, ({a, b}) => a > 0 && b == 0)
 }
 
 export function Vectorize(s: string): Vector {
   const v = {} as Vector
-  tokenize(s).forEach(t => v[t] = succ(v[t]))
+  Utils.tokenize(s).forEach(t => v[t] = Utils.succ(v[t]))
   return v
-}
-
-export function succ(x: undefined | number): number {
-  return x === undefined ? 1 : x + 1
 }
 
 export function ParseXML(s: string): Document {
   const p = new DOMParser()
-  return p.parseFromString(s, 'application/xml')
-}
-
-export function Arr<A>(xs: ArrayLike<A>): A[] {
-  const out = [] as A[]
-  for (let i = 0; i < xs.length; i++) {
-    out.push(xs[i])
+  const d = p.parseFromString(s, 'application/xml')
+  const q_pe = d.querySelector('parsererror')
+  if (q_pe) {
+    const q_div = q_pe.querySelector('div')
+    throw (q_div || q_pe).textContent
   }
-  return out
+  return d
 }
 
 export function FromXML(d: Document | string): Text {
@@ -119,20 +59,20 @@ export function FromXML(d: Document | string): Text {
   const r = {} as Text
   const bump = (k: string, t: string) => {
     r[k] = r[k] || {}
-    r[k][t] = succ(r[k][t])
+    r[k][t] = Utils.succ(r[k][t])
   }
   while (w.nextNode()) {
     const node = w.currentNode
     if (node.nodeType == 1) {
       const attrs = node.attributes
       const t = (node as any).tagName || '<?>'
-      Arr(attrs).map(attr => {
+      Utils.Arr(attrs).map(attr => {
         bump(t + '.' + attr.name, attr.value)
       })
     } else if (node.nodeType == 3) {
       const k = ((node.parentNode && (node.parentNode as any).tagName) || '<?>')
       const text = node.textContent || ""
-      tokenize(text).forEach(t => bump(k, t))
+      Utils.tokenize(text).forEach(t => bump(k, t))
     }
   }
   return r
