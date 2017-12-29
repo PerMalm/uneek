@@ -1,20 +1,17 @@
 html, body {
     margin: 0;
     padding: 0;
+    height: 100%;
 }
 
 body {
-    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.4em;
     background: #393838;
     color: #4d4d4d;
-    margin: 0 auto;
-    -webkit-font-smoothing: antialiased;
-    -moz-font-smoothing: antialiased;
-    font-smoothing: antialiased;
-    font-weight: 300;
+    font-weight: 500;
 }
-
 
 .rows {
     display: flex;
@@ -34,9 +31,12 @@ body {
     background: white;
 }
 
+.h100 { height: 100%; }
+
 .w100 { width: 100%; }
 .w20 { width: 20%; }
 .w60 { width: 60%; }
+.w80 { width: 80%; }
 .w33 { width: 33%; }
 
 .orange {
@@ -45,16 +45,36 @@ body {
 
 .textarea {
     resize: none;
-    width: 90%;
-    height: 90%;
+    width: 95%;
+    height: 95%;
 }
 
 .centered {
     justify-content: center;
 }
 
+.vcentered {
+    align-items: center;
+}
+
 .error {
     background: red;
     color: white;
     font-weight: 800;
+}
+
+.r {
+    text-align: right;
+}
+
+.l {
+    text-align: left;
+}
+
+.c {
+    text-align: center;
+}
+
+.small {
+    font-size: 0.75em;
 }

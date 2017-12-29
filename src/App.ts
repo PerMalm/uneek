@@ -45,26 +45,44 @@ export const View = (store: Store<State>): VNode => {
       return {}
     }
   })
+
   const only =
     (p: (a: number, b: number) => boolean) =>
     Utils.record_filter(result, ({a, b}) => p(a,b))
+
+  const count =
+    (w: Uneek.VectorPair) =>
+    tag('.whitebox.w33',
+      Utils.record_traverse(w,
+        ({a, b}, k) =>
+          tag('.rows',
+            tag('span.w20.r', a > 0 && a),
+            tag('span.w60.c', k, a > 0 && b > 0 && tag('span.small', ` (${a + b})`)),
+            tag('span.w20.l', b > 0 && b))))
+
   return tag(
-    '.rows.w100.marginalized',
+    '.rows.w100.h100.marginalized',
     tag('.w20',
-      tag('.cols',
+      tag('.cols.h100.centered.vcentered',
         s.textarea(a, undefined, undefined, s.classed('textarea')),
         a_err && tag('.error', a_err)
       )),
-    tag('.w60.cols',
-      tag('.rows.centered.marginalized', keys.map(k => s.button(() => store.at('key').set(k), k))),
-      tag('.rows.marginalized',
-        tag('pre.whitebox.w33', show(only((a, b) => b == 0))),
-        tag('pre.whitebox.w33', show(only((a, b) => a > 0 && b > 0))),
-        tag('pre.whitebox.w33', show(only((a, b) => a == 0))),
+    tag('.w60.cols.h100',
+      tag('.rows.centered.marginalized',
+        keys.map(
+          k =>
+            s.button(
+              () => store.at('key').set(k),
+              k,
+              s.attrs({disabled: k === store.at('key').get()})))),
+      tag('.rows.h100.marginalized',
+        count(only((a, b) => b == 0)),
+        count(only((a, b) => a > 0 && b > 0)),
+        count(only((a, b) => a == 0)),
       )
     ),
     tag('.w20',
-      tag('.cols',
+      tag('.cols.h100.centered.vcentered',
         s.textarea(b, undefined, undefined, s.classed('textarea')),
         b_err && tag('.error', b_err)
       )),
