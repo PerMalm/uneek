@@ -9,7 +9,7 @@ declare const module: any;
 declare const require: any;
 
 if (module.hot) {
-  module.hot.accept('./App.ts', (_: any) => {
+  module.hot.accept(() => {
     try {
       const NextApp = require('./App.ts')
       reattach(NextApp.App)
