@@ -52,9 +52,10 @@ export const View = (store: Store<State>): VNode => {
 
   const count =
     (w: Uneek.VectorPair) =>
-    tag('.whitebox.w33',
-      Utils.record_traverse(w,
-        ({a, b}, k) =>
+    tag('.whitebox.w33.scroll',
+      Utils.record_traverse(w, ({a, b}, k) => ({a, b, k}))
+        .sort((l, r) => (r.a + r.b) - (l.a + l.b))
+        .map(({a, b, k}) =>
           tag('.rows',
             tag('span.w20.r', a > 0 && a),
             tag('span.w60.c', k, a > 0 && b > 0 && tag('span.small', ` (${a + b})`)),

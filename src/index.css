@@ -78,3 +78,7 @@ body {
 .small {
     font-size: 0.75em;
 }
+
+.scroll {
+    overflow: scroll;
+}
