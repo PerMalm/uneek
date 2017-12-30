@@ -8,10 +8,12 @@
   "repository": "https://github.com/danr/uneek/",
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
     "reactive-lens": "^0.2.0",
     "snabbis": "^0.6.0"
   },
   "devDependencies": {
+    "@types/jquery": "^3.2.17",
     "@types/jsdom": "^11.0.4",
     "@types/tape": "^4.2.30",
     "jsdom": "^11.5.1",

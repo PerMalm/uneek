@@ -10,7 +10,9 @@ export const html = (innerHTML: string) => tag('div', s.props({ innerHTML }))
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import '../node_modules/bootstrap/dist/css/bootstrap-theme.min.css'
-// import '../node_modules/bootstrap/dist/js/bootstrap.min.js'
+import * as jQuery from 'jquery'
+; (window as any).jQuery = jQuery
+import 'bootstrap'
 
 const sb: string = require('./sb.png')
 
