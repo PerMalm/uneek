@@ -12,6 +12,8 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import '../node_modules/bootstrap/dist/css/bootstrap-theme.min.css'
 // import '../node_modules/bootstrap/dist/js/bootstrap.min.js'
 
+const sb: string = require('./sb.png')
+
 export interface State {
   readonly a: string,
   readonly b: string,
@@ -79,6 +81,7 @@ export const View = (store: Store<State>): VNode => {
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#">Brand</a>
+      <img src="${sb}"/>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -134,7 +137,8 @@ export const View = (store: Store<State>): VNode => {
               s.button(
                 () => store.at('key').set(k),
                 k,
-                s.attrs({disabled: k === store.at('key').get()})))),
+                s.attrs({disabled: k === store.at('key').get()}))),
+          tag('img', s.attrs({src: sb, height: '24px'}))),
         tag('.rows.h100.marginalized',
           count(only((a, b) => b == 0)),
           count(only((a, b) => a > 0 && b > 0)),
