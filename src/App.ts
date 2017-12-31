@@ -228,7 +228,7 @@ export const View = (store: Store<State>): VNode => {
             Intersectional analysis  [A &#8745; B]</label>
           </div>
           <hr>
-          <h4>Format Selection</h4>
+          <h4>Input format</h4>
           <label class="checkbox-inline">
           <input type="checkbox" value="">
           txt</label>
@@ -264,9 +264,7 @@ export const View = (store: Store<State>): VNode => {
         <li>This web-tool is under development; so are the methods and thoughts revolving around it. See the <a href="#">News</a> section for relevant updates. </li>	  
         <li>See the <a href="#">Documentation</a> for how to use the tool, for methods, and for technical information.</li>
         <li>Please send suggestions, bug reports etc. to my email <a href="#"> per.malm@nordiska.uu.se</a></li>
-        <li>Be careful to compare comparable categories, such as NP vs NP, and so on, but not AP vs S. <span class="nowrap"></span></li>
-        <li><a href="#">Useful links</a></li>
-	  
+        <li> Check out <a href="#">Useful links</a> for some, well, useful stuff, such as parsers, concordance tools, etc.</li>
       </ul>
     </div>
     <div class="col-md-4">
@@ -275,9 +273,8 @@ export const View = (store: Store<State>): VNode => {
           <h4 class="mrgn-tp-0">Downloading the Results</h4>
 	  <hr>
           <h5>
-	  
- Use  yada yada yada ...
-	  
+	  When you download the results, you get all the analyses available in the "Settings box" to the left. The results are
+	  listed for for absolute frequency in txt format. You can use  
 	  </h5>
         </div>
         <div>
