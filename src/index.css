@@ -9,9 +9,80 @@ body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.4em;
     background: #393838;
-    color: #4d4d4d;
+    color: #777575;
     font-weight: 500;
 }
+
+h1 {
+
+  font-size: 16px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.4em;
+  background: #393838;
+  color: #4d4d4d;
+  font-weight: 500;
+
+
+}
+
+footer { 
+	
+    font-size: 16px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 1.4em;
+    background: linear-gradient(#2F2F2F, black);
+    color: #B8BABB;
+    font-weight: 500;
+	
+}
+
+.btn-customi {
+  background: #fb7304; /* use your color here */
+  border: 4px solid black;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.btn-customii {
+  background: white; /* use your color here */
+  border: 4px solid black;
+  color: white;
+  padding: 10px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.boxed {
+	
+    background: white; /* use your color here */
+    border: 2px solid black;	
+}
+
+
+.btn {
+      color:black;
+    }
+	
+
+
+a {
+color: #c45f0d;
+}
+a:link {
+color: #fb7304;
+}
+a:hover {
+color: white;
+}
+
 
 .rows {
     display: flex;
