@@ -33,12 +33,10 @@ export const init: State = {
   key: '',
 }
 
-export const placeholder: State = {
-	"a": "Insert File A here, or use the button below to upload from your device.",
-	"b": "Insert File B here, or use the button below to upload from your device."
+export const placeholder= {
+  a: "Insert File A here, or use the button below to upload from your device.",
+  b: "Insert File B here, or use the button below to upload from your device."
 }
-
-
 
 export const show = (s: any) => JSON.stringify(s, undefined, 2)
 
@@ -82,9 +80,28 @@ export const View = (store: Store<State>): VNode => {
             tag('span.w60.c', k, a > 0 && b > 0 && tag('span.small', ` (${a + b})`)),
             tag('span.w20.l', b > 0 && b))))
 
+  const input =
+    (name: 'a' | 'b') =>
+    tag('.w20.thumbnail',
+      tag('.cols.h100.centered.vcentered',
+        tag('caption', tag('h3', 'Text ' + name.toUpperCase())),
+        s.textarea(
+          store.at(name), undefined, undefined,
+          s.classed('textarea'),
+          s.attrs({"placeholder": placeholder[name]})),
+        // the error message:
+        a_err && tag('.error', a_err),
+        tag('div.marginalized',
+          tag('button.btn.btn-customi',s.attrs({type:"button"}),'Upload'),
+          tag('button.btn.btn-customii',s.attrs({type:"button"}),'Clear'),
+        )
+      )
+    )
+
+
   return tag('div.cols.h100',
     html(`
-		
+
 <nav class="navbar navbar-default navbar-inverse">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -105,11 +122,11 @@ export const View = (store: Store<State>): VNode => {
       <ul class="nav navbar-nav">
 
       </ul>
-       
+
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#">News</a></li>
         <li><a href="${doc}" download="uneek-documentation.pdf">Documentation</a></li>
-        <li><a href="#">Useful Links</a></li>	
+        <li><a href="#">Useful Links</a></li>
         <li><a href="#" data-target="#exampleModal" data-toggle="modal" >Refer to Uneek</a></li>
 
 <!-- Modal -->
@@ -138,41 +155,24 @@ export const View = (store: Store<State>): VNode => {
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form> -->
-        
-		<!--
+
+    <!--
 <div class="panel panel-default">
   <div class="panel-body">
     Panel content
   </div>
   <div class="panel-footer">Panel footer</div>
 </div>
-		
-		-->
+
+    -->
 
         </li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>`),
-    tag('.rows.w100.h100.marginalized',
-      tag('.w20.thumbnail',
-        tag('.cols.h100.centered.vcentered',
-          s.textarea(a, undefined, undefined, s.classed('textarea'), s.attrs({"placeholder": placeholder.a})),
-          a_err && tag('.error', a_err),
-      tag('caption',
-	  tag('h3', 'Field A'),	
-		tag('div', 
-  	  	tag('button.btn.btn-customi',s.attrs({type:"button"}),tag('span.'),'Upload'),
-  	  	tag('button.btn.btn-customii',s.attrs({type:"button"}),tag('span.'),'Clear'),
-			),
-	/* 
-		tag('button.btn.btn-default',s.attrs({type:"button"}),'Clear'),
-  	 	tag('button.btn.btn-default',s.attrs({type:"button"}),tag('span.'),'ost'), */
-
-)
-		
-        ),
-),
+    tag('.rows.w100.h100.marginalized.some-height',
+      input('a'),
       tag('.w60.cols.h100',
         tag('.rows.centered.marginalized',
           keys.map(
@@ -181,36 +181,16 @@ export const View = (store: Store<State>): VNode => {
                 () => store.at('key').set(k),
                 k,
                 s.attrs({disabled: k === store.at('key').get()})))),
-          //tag('img', s.attrs({src: sb, height: '24px'}))),
+        (store.get().key == '') ?
+        tag('.h100.thumbnail.centered.vcentered.rows', tag('span', 'Uneek')) :
         tag('.rows.h100.marginalized',
           count(only((a, b) => b == 0)),
           count(only((a, b) => a > 0 && b > 0)),
           count(only((a, b) => a == 0)),
-        )
-      ),
-      tag('.w20.thumbnail',
-        tag('.cols.h100.centered.vcentered',
-          s.textarea(b, undefined, undefined, s.classed('textarea'), s.attrs({"placeholder": placeholder.b})),
-          b_err && tag('.error', b_err)
-      tag('caption',
-	  tag('h3', 'Field B'),
-  		tag('div', 
-    	  	tag('button.btn.btn-customi',s.attrs({type:"button"}),tag('span.'),'Upload'),
-    	  	tag('button.btn.btn-customii',s.attrs({type:"button"}),tag('span.'),'Clear'),
-	  ),
-  	/* 
-  		tag('button.btn.btn-default',s.attrs({type:"button"}),'Clear'),
-    	 	tag('button.btn.btn-default',s.attrs({type:"button"}),tag('span.'),'ost'), */
-		
-  )
         )),
-  ),
-  
-  html(`
-	  
-	  
-	  
-<div class="row">
+      input('b')),
+    html(`
+<div class="row container">
     <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-body">
@@ -250,18 +230,18 @@ export const View = (store: Store<State>): VNode => {
           Shallow</label>
           <label class="checkbox-inline">
           <input type="checkbox" value="">
-          Deep</label>         
+          Deep</label>
         </div>
-	  
+
       </div>
     </div>
     <div class="col-md-4">
-	<!--  <h3> Some suggestions</h3> -->
-	  <h4>  </h4>
-	  
+  <!--  <h3> Some suggestions</h3> -->
+    <h4>  </h4>
+
       <h4 class="mrgn-tp-0 text-success"><span class="glyphicon glyphicon-ok-circle"></span> Recommendations</h4>
       <ul>
-        <li>This web-tool is under development; so are the methods and thoughts revolving around it. See the <a href="#">News</a> section for relevant updates. </li>	  
+        <li>This web-tool is under development; so are the methods and thoughts revolving around it. See the <a href="#">News</a> section for relevant updates. </li>
         <li>See the <a href="#">Documentation</a> for how to use the tool, for methods, and for technical information.</li>
         <li>Please send suggestions, bug reports etc. to my email <a href="#"> per.malm@nordiska.uu.se</a></li>
         <li> Check out <a href="#">Useful links</a> for some, well, useful stuff, such as parsers, concordance tools, etc.</li>
@@ -271,31 +251,31 @@ export const View = (store: Store<State>): VNode => {
       <div class="panel panel-default">
         <div class="panel-body">
           <h4 class="mrgn-tp-0">Downloading the Results</h4>
-	  <hr>
+    <hr>
           <h5>
-	  When you download the results, you get all the analyses available in the "Settings box" to the left. The results are
-	  listed for for absolute frequency in txt format. You can use  
-	  </h5>
+    When you download the results, you get all the analyses available in the "Settings box" to the left. The results are
+    listed for for absolute frequency in txt format. You can use
+    </h5>
         </div>
         <div>
           <hr>
 <center> <button type="button" class="btn btn-customi">Download Results</span></button>
 <button type="button" class="btn btn-customii ">Clear All Fields</button> </center>
-	  
+
       </div>
       </div>
-	  
+
     </div>
   </div>
-	  
-	  
+
+
 <footer>
   <div class="inner-footer">
     <div class="container">
       <div class="row">
         <div class="col-md-4 f-about">
           <h3 class="link"><img alt="Logga" src="X"></h3>
-	            <p> You shall know the difference between two polysemous words by the company one of them constantly rejects. 
+              <p> You shall know the difference between two polysemous words by the company one of them constantly rejects.
           </p>
         </div>
         <div class="col-md-4 l-posts">
@@ -322,11 +302,11 @@ export const View = (store: Store<State>): VNode => {
     <div class="container">
       <div class="row">
         <div class="copyright">
-        <img alt="CClogga" src="/images/cc.png">	  
+        <img alt="CClogga" src="/images/cc.png">
         </div>
       </div>
     </div>
-   
+
 
 
 
@@ -337,8 +317,3 @@ export const View = (store: Store<State>): VNode => {
   `))
 }
 
-/* 
-
-
-
-*/

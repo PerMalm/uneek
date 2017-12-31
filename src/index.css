@@ -25,52 +25,47 @@ h1 {
 
 }
 
-footer { 
-	
+footer {
+
     font-size: 16px;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     line-height: 1.4em;
     background: linear-gradient(#2F2F2F, black);
     color: #B8BABB;
     font-weight: 500;
-	
+
+}
+
+.btn-customi, .btn-customii {
+  border: 4px solid black;
+  color: white;
+  padding: 10px 22px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border-radius: 10px;
+  font-size: 16px;
 }
 
 .btn-customi {
-  background: #fb7304; /* use your color here */
-  border: 4px solid black;
-  color: white;
-  padding: 10px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  border-radius: 10px;
-  font-size: 16px;
+  background: #fb7304;
 }
 
 .btn-customii {
-  background: white; /* use your color here */
-  border: 4px solid black;
-  color: white;
-  padding: 10px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  border-radius: 10px;
-  font-size: 16px;
+  background: white;
 }
 
 .boxed {
-	
+
     background: white; /* use your color here */
-    border: 2px solid black;	
+    border: 2px solid black;
 }
 
 
 .btn {
       color:black;
     }
-	
+
 
 
 a {
@@ -152,4 +147,8 @@ color: white;
 
 .scroll {
     overflow: scroll;
+}
+
+.some-height {
+    min-height: 600px;
 }
