@@ -219,7 +219,7 @@ export const App = (store: Store<State>) => {
     <!--  <h3> Some suggestions</h3> -->
       <h4>  </h4>
 
-        <h4 class="mrgn-tp-0 text-success"><span class="glyphicon glyphicon-ok-circle"></span> Recommendations</h4>
+        <h4 class="mrgn-tp-0 text-success"><span class="glyphicon glyphicon-info-sign"></span> Suggestions</h4>
         <ul>
           <li>This web-tool is under development; so are the methods and thoughts revolving around it. See the <a href="#">News</a> section for relevant updates. </li>
           <li>See the <a href="#">Documentation</a> for how to use the tool, for methods, and for technical information.</li>
@@ -232,7 +232,7 @@ export const App = (store: Store<State>) => {
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-body">
-            <h3 class="mrgn-tp-0">Downloading the Results</h3>
+            <h3 class="mrgn-tp-0">Download Results</h3>
       <hr>
 <h4>
     When you download the results, you get all the analyses available in the "Settings box" to the left, that is:
