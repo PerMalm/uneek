@@ -97,7 +97,78 @@ export const App = (store: Store<State>) => {
   store.storage_connect('uneek')
   const key_input = html `<input ${value(store.at('key'))}>`
 
-  const below =       html`
+  const above = html`
+  <nav class="navbar navbar-default navbar-inverse">
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+          <img alt="Logga" src="X">
+        </a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="#">News</a></li>
+          <li><a href="${doc}" download="uneek-documentation.pdf">Documentation</a></li>
+          <li><a href="#">Useful Links</a></li>
+          <li><a href="#" data-target="#exampleModal" data-toggle="modal" >Refer to Uneek</a></li>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Use reference below.</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Malm, P., Ahlberg, M., & Rosén, D. (2018, May). Title here . In LREC (pp. xxx-xxx).
+        </div>
+        <div class="modal-footer">
+        <!--  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+       <!-- <form class="navbar-form navbar-left">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search">
+          </div>
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form> -->
+
+      <!--
+  <div class="panel panel-default">
+    <div class="panel-body">
+      Panel content
+    </div>
+    <div class="panel-footer">Panel footer</div>
+  </div>
+
+      -->
+
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>`
+
+  const below = html`
   <div class="row container">
       <div class="col-md-4">
         <div class="panel panel-default">
@@ -275,77 +346,7 @@ export const App = (store: Store<State>) => {
 
 
     return tag('div.cols.h100',
-      html`
-
-  <nav class="navbar navbar-default navbar-inverse">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">
-          <img alt="Logga" src="X">
-        </a>
-      </div>
-
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <ul class="nav navbar-nav">
-
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">News</a></li>
-          <li><a href="${doc}" download="uneek-documentation.pdf">Documentation</a></li>
-          <li><a href="#">Useful Links</a></li>
-          <li><a href="#" data-target="#exampleModal" data-toggle="modal" >Refer to Uneek</a></li>
-
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Use reference below.</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Malm, P., Ahlberg, M., & Rosén, D. (2018, May). Title here . In LREC (pp. xxx-xxx).
-        </div>
-        <div class="modal-footer">
-        <!--  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button> -->
-        </div>
-      </div>
-    </div>
-  </div>
-       <!-- <form class="navbar-form navbar-left">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search">
-          </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form> -->
-
-      <!--
-  <div class="panel panel-default">
-    <div class="panel-body">
-      Panel content
-    </div>
-    <div class="panel-footer">Panel footer</div>
-  </div>
-
-      -->
-
-          </li>
-        </ul>
-      </div><!-- /.navbar-collapse -->
-    </div><!-- /.container-fluid -->
-  </nav>`,
+      above,
       tag('.rows.w100.h100.marginalized.some-height',
         input('a'),
         tag('.w60.cols.h100',
