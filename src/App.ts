@@ -169,7 +169,7 @@ export const App = (store: Store<State>) => {
   </nav>`
 
   const below = html`
-  <div class="row container">
+  <div class="row container w100">
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-body">
@@ -195,14 +195,14 @@ export const App = (store: Store<State>) => {
             <label class="checkbox-inline">
             <input type="checkbox" value="">
             xml</label>
-            <hr>
+    <!--        <hr>
             <h4>Statistics</h4>
             <label class="checkbox-inline">
             <input type="checkbox" value="">
             Absolute Numbers</label>
             <label class="checkbox-inline">
             <input type="checkbox" value="">
-            Data Saturation</label>
+            Data Saturation</label> -->
             <hr>
             <h4>Syntactic Operations</h4>
             <label class="checkbox-inline">
@@ -225,17 +225,32 @@ export const App = (store: Store<State>) => {
           <li>See the <a href="#">Documentation</a> for how to use the tool, for methods, and for technical information.</li>
           <li>Please send suggestions, bug reports etc. to my email <a href="#"> per.malm@nordiska.uu.se</a></li>
           <li> Check out <a href="#">Useful links</a> for some, well, useful stuff, such as parsers, concordance tools, etc.</li>
+          <li> Processing large files may take some time; be patient.</li>
+	
         </ul>
       </div>
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-body">
-            <h4 class="mrgn-tp-0">Downloading the Results</h4>
+            <h3 class="mrgn-tp-0">Downloading the Results</h3>
       <hr>
-            <h5>
-      When you download the results, you get all the analyses available in the "Settings box" to the left. The results are
-      listed for for absolute frequency in txt format. You can use
-      </h5>
+<h4>
+    When you download the results, you get all the analyses available in the "Settings box" to the left, that is:
+<p>
+      </p><ul>
+		<li>Uniqueness Differentiation</li>
+		<li>Intersectional Analysis</li>
+	<!--	<li>Absolute Frequency</li>
+		<li>Data Saturation </li> -->
+		<li>Shallow Analysis </li>
+		<li>Deep Analysis </li>
+      </ul>
+<p></p>
+	
+	 The results are listed for for absolute frequency in and given in txt format. 
+<p></p>
+	
+        </h4>
           </div>
           <div>
             <hr>
@@ -245,7 +260,7 @@ export const App = (store: Store<State>) => {
         </div>
         </div>
 
-      </div>
+    </div>
     </div>
 
 
@@ -347,10 +362,10 @@ export const App = (store: Store<State>) => {
 
     return tag('div.cols.h100',
       above,
-      tag('.rows.w100.h100.marginalized.some-height',
+      tag('.rows.w100.h100.container.col-md-4.marginalized.some-height',
         input('a'),
         tag('.w60.cols.h100',
-          key_input,
+          //key_input,
           tag('.rows.centered.marginalized',
             keys.map(
               k =>

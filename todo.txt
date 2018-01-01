@@ -1,0 +1,9 @@
+To do lista:
+
+	* Fixa xml-listan:
+	* Fixa en ’’arbetar’’-symbol
+	* Matcha marginalen i de tre lådorna under unikhetslådorna med varandra. 
+	* Fixa bildimport.
+	* Hur skriver in information på en ny sida. 
+	* För check box i Setting: När lådan icke är okryssad, så ser man inte resultatet; vid 		ikryssad ska man se den. 
+
