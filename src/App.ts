@@ -14,26 +14,35 @@ const doc = 'images/latextempates.pdf'
 
 let next_unique = 0
 
-export function html(snippets: TemplateStringsArray, ...syncs: (Store<any> | string)[]): VNode {
+export interface StoreSplice {
+  selector: string,
+  store: Store<any>
+}
+
+export const checked = (store: Store<boolean>): StoreSplice => ({selector: 'checked', store})
+export const value = (store: Store<string>): StoreSplice => ({selector: 'value', store})
+
+export function html(snippets: TemplateStringsArray, ...syncs: (StoreSplice | string)[]): VNode {
   let innerHTML = ''
   const cbs = [] as (() => void)[]
-  syncs.forEach((store: Store<any> | string, i) => {
-    if (typeof store == 'string') {
+  syncs.forEach((sync: StoreSplice | string, i) => {
+    if (typeof sync == 'string') {
       innerHTML += snippets[i]
-      innerHTML += store
+      innerHTML += sync
     } else {
       const id = `snabbis-unique-${++next_unique}`
+      const {store, selector} = sync
       innerHTML += snippets[i]
       innerHTML += ` id=${id} `
       cbs.push(() => window.requestAnimationFrame(() => {
         const elm = document.getElementById(id) as HTMLInputElement | null
         if (elm) {
-          if (elm.value != store.get()) {
-            elm.value = store.get()
+          if ((elm as any)[selector] != store.get()) {
+            (elm as any)[selector] = store.get()
           }
-          store.ondiff((z: any, a: any) => z !== a && (elm.value = z))
-          elm.onchange = () => store.set(elm.value)
-          elm.oninput = () => store.set(elm.value)
+          store.ondiff((z: any, a: any) => z !== a && ((elm as any)[selector] = z))
+          elm.onchange = () => store.set((elm as any)[selector])
+          elm.oninput = () => store.set((elm as any)[selector])
         } else {
           console.error(`Element not found: ${id}`)
         }
@@ -62,12 +71,14 @@ export interface State {
   readonly a: string,
   readonly b: string,
   readonly key: string | '',
+  readonly show_intersection: boolean
 }
 
 export const init: State = {
   a: '',
   b: '',
   key: '',
+  show_intersection: true,
 }
 
 export const placeholder= {
@@ -84,7 +95,136 @@ export const App = (store: Store<State>) => {
   global.store = store
   global.reset = () => store.set(init)
   store.storage_connect('uneek')
-  const key_input = html `<input ${store.at('key')}>`
+  const key_input = html `<input ${value(store.at('key'))}>`
+
+  const below =       html`
+  <div class="row container">
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h3 class="mrgn-tp-0">Settings</h3>
+            <hr>
+            <h4>Set Operations</h4>
+            <div class="checkbox">
+              <label>
+              <input type="checkbox" value="">
+              Uniqueness differentiation [(A–B) and (B–A)]</label>
+            </div>
+            <div class="checkbox">
+              <label>
+              <input type="checkbox" value="" ${checked(store.at('show_intersection'))}>
+              Intersectional analysis  [A &#8745; B]</label>
+            </div>
+            <hr>
+            <h4>Input format</h4>
+            <label class="checkbox-inline">
+            <input type="checkbox" value="">
+
+            txt</label>
+            <label class="checkbox-inline">
+            <input type="checkbox" value="">
+            xml</label>
+            <hr>
+            <h4>Statistics</h4>
+            <label class="checkbox-inline">
+            <input type="checkbox" value="">
+            Absolute Numbers</label>
+            <label class="checkbox-inline">
+            <input type="checkbox" value="">
+            Data Saturation</label>
+            <hr>
+            <h4>Syntactic Operations</h4>
+            <label class="checkbox-inline">
+            <input type="checkbox" value="">
+            Shallow</label>
+            <label class="checkbox-inline">
+            <input type="checkbox" value="">
+            Deep</label>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-4">
+    <!--  <h3> Some suggestions</h3> -->
+      <h4>  </h4>
+
+        <h4 class="mrgn-tp-0 text-success"><span class="glyphicon glyphicon-ok-circle"></span> Recommendations</h4>
+        <ul>
+          <li>This web-tool is under development; so are the methods and thoughts revolving around it. See the <a href="#">News</a> section for relevant updates. </li>
+          <li>See the <a href="#">Documentation</a> for how to use the tool, for methods, and for technical information.</li>
+          <li>Please send suggestions, bug reports etc. to my email <a href="#"> per.malm@nordiska.uu.se</a></li>
+          <li> Check out <a href="#">Useful links</a> for some, well, useful stuff, such as parsers, concordance tools, etc.</li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h4 class="mrgn-tp-0">Downloading the Results</h4>
+      <hr>
+            <h5>
+      When you download the results, you get all the analyses available in the "Settings box" to the left. The results are
+      listed for for absolute frequency in txt format. You can use
+      </h5>
+          </div>
+          <div>
+            <hr>
+  <center> <button type="button" class="btn btn-customi">Download Results</span></button>
+  <button type="button" class="btn btn-customii ">Clear All Fields</button> </center>
+
+        </div>
+        </div>
+
+      </div>
+    </div>
+
+
+  <footer>
+    <div class="inner-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 f-about">
+            <h3 class="link"><img alt="Logga" src="X"></h3>
+                <p> You shall know the difference between two polysemous words by the company one of them constantly rejects.
+            </p>
+          </div>
+          <div class="col-md-4 l-posts">
+            <h3 class="link">News</h3>
+            <ul>
+              <li><a href="#">Newspost1</a></li>
+              <li><a href="#">Newspost2</a></li>
+              <li><a href="#">Newspost3</a></li>
+              <li><a href="#">Newspost4</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4 f-contact">
+            <h3 class="link">Contact</h3>
+            <a href="#">
+              <p><i class="fa fa-envelope"></i> per.malm@nordiska.uu.se</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="last-div">
+      <div class="container">
+        <div class="row">
+          <div class="copyright">
+          <img alt="CClogga" src="/images/cc.png">
+          </div>
+        </div>
+      </div>
+
+
+
+
+    </div>
+
+
+  </footer>
+    `
+
   return () => {
     const a = store.at('a')
     const b = store.at('b')
@@ -106,7 +246,7 @@ export const App = (store: Store<State>) => {
 
     const count =
       (w: Uneek.VectorPair) =>
-      tag('.whitebox.w33.scroll',
+      tag('.whitebox.equal-width.scroll',
         Utils.record_traverse(w, ({a, b}, k) => ({a, b, k}))
           .sort((l, r) => (r.a + r.b) - (l.a + l.b))
           .map(({a, b, k}) =>
@@ -221,137 +361,11 @@ export const App = (store: Store<State>) => {
           tag('.h100.thumbnail.centered.vcentered.rows', tag('span', 'Uneek')) :
           tag('.rows.h100.marginalized',
             count(only((a, b) => b == 0)),
-            count(only((a, b) => a > 0 && b > 0)),
+            store.get().show_intersection && count(only((a, b) => a > 0 && b > 0)),
             count(only((a, b) => a == 0)),
           )),
         input('b')),
-      html`
-  <div class="row container">
-      <div class="col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <h3 class="mrgn-tp-0">Settings</h3>
-            <hr>
-            <h4>Set Operations</h4>
-            <div class="checkbox">
-              <label>
-              <input type="checkbox" value="">
-              Uniqueness differentiation [(A–B) and (B–A)]</label>
-            </div>
-            <div class="checkbox">
-              <label>
-              <input type="checkbox" value="">
-              Intersectional analysis  [A &#8745; B]</label>
-            </div>
-            <hr>
-            <h4>Input format</h4>
-            <label class="checkbox-inline">
-            <input type="checkbox" value="">
-
-            txt</label>
-            <label class="checkbox-inline">
-            <input type="checkbox" value="">
-            xml</label>
-            <hr>
-            <h4>Statistics</h4>
-            <label class="checkbox-inline">
-            <input type="checkbox" value="">
-            Absolute Numbers</label>
-            <label class="checkbox-inline">
-            <input type="checkbox" value="">
-            Data Saturation</label>
-            <hr>
-            <h4>Syntactic Operations</h4>
-            <label class="checkbox-inline">
-            <input type="checkbox" value="">
-            Shallow</label>
-            <label class="checkbox-inline">
-            <input type="checkbox" value="">
-            Deep</label>
-          </div>
-
-        </div>
-      </div>
-      <div class="col-md-4">
-    <!--  <h3> Some suggestions</h3> -->
-      <h4>  </h4>
-
-        <h4 class="mrgn-tp-0 text-success"><span class="glyphicon glyphicon-ok-circle"></span> Recommendations</h4>
-        <ul>
-          <li>This web-tool is under development; so are the methods and thoughts revolving around it. See the <a href="#">News</a> section for relevant updates. </li>
-          <li>See the <a href="#">Documentation</a> for how to use the tool, for methods, and for technical information.</li>
-          <li>Please send suggestions, bug reports etc. to my email <a href="#"> per.malm@nordiska.uu.se</a></li>
-          <li> Check out <a href="#">Useful links</a> for some, well, useful stuff, such as parsers, concordance tools, etc.</li>
-        </ul>
-      </div>
-      <div class="col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-body">
-            <h4 class="mrgn-tp-0">Downloading the Results</h4>
-      <hr>
-            <h5>
-      When you download the results, you get all the analyses available in the "Settings box" to the left. The results are
-      listed for for absolute frequency in txt format. You can use
-      </h5>
-          </div>
-          <div>
-            <hr>
-  <center> <button type="button" class="btn btn-customi">Download Results</span></button>
-  <button type="button" class="btn btn-customii ">Clear All Fields</button> </center>
-
-        </div>
-        </div>
-
-      </div>
-    </div>
-
-
-  <footer>
-    <div class="inner-footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 f-about">
-            <h3 class="link"><img alt="Logga" src="X"></h3>
-                <p> You shall know the difference between two polysemous words by the company one of them constantly rejects.
-            </p>
-          </div>
-          <div class="col-md-4 l-posts">
-            <h3 class="link">News</h3>
-            <ul>
-              <li><a href="#">Newspost1</a></li>
-              <li><a href="#">Newspost2</a></li>
-              <li><a href="#">Newspost3</a></li>
-              <li><a href="#">Newspost4</a></li>
-            </ul>
-          </div>
-          <div class="col-md-4 f-contact">
-            <h3 class="link">Contact</h3>
-            <a href="#">
-              <p><i class="fa fa-envelope"></i> per.malm@nordiska.uu.se</p>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="last-div">
-      <div class="container">
-        <div class="row">
-          <div class="copyright">
-          <img alt="CClogga" src="/images/cc.png">
-          </div>
-        </div>
-      </div>
-
-
-
-
-    </div>
-
-
-  </footer>
-    `)
+      below)
   }
 }
 

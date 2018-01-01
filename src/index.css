@@ -152,3 +152,8 @@ color: white;
 .some-height {
     min-height: 600px;
 }
+
+.equal-width {
+    flex-grow: 1;
+    flex-basis: 0;
+}
