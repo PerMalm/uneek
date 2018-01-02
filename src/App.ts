@@ -1,13 +1,10 @@
 import * as Uneek from './Uneek'
 import * as Utils from './Utils'
-import * as News from "./News"
 
 import { VNode } from "snabbdom/vnode"
 import { attachTo } from "snabbdom/helpers/attachto"
 import { Store, Lens, Omit } from "reactive-lens"
 import { tags, tag, s, TagData } from "snabbis"
-
-export {News}
 
 const {div, span, h1} = tags
 
@@ -23,7 +20,7 @@ export interface StoreSplice {
   store: Store<any>
 }
 
-export const checkedF = (store: Store<boolean>): StoreSplice => ({selector: 'checked', store})
+export const checked = (store: Store<boolean>): StoreSplice => ({selector: 'checked', store})
 export const value = (store: Store<string>): StoreSplice => ({selector: 'value', store})
 
 export function html(snippets: TemplateStringsArray, ...syncs: (StoreSplice | string)[]): VNode {
@@ -48,7 +45,7 @@ export function html(snippets: TemplateStringsArray, ...syncs: (StoreSplice | st
           elm.onchange = () => store.set((elm as any)[selector])
           elm.oninput = () => store.set((elm as any)[selector])
         } else {
-          console.error(`Element not found: ${id}`)
+          // console.error(`Element not found: ${id} ${s}`)
         }
       }))
     }
@@ -56,10 +53,10 @@ export function html(snippets: TemplateStringsArray, ...syncs: (StoreSplice | st
   if (snippets.length > syncs.length) {
     innerHTML += snippets[snippets.length - 1]
   }
-  return div, tag(
-    'div',
+  return tag('div',
+    s.key(++next_unique),
     s.props({ innerHTML }),
-    s.hook('update')(() => cbs.forEach(k => k())),
+    s.hook('init')(() => cbs.forEach(k => k())),
   )
 }
 
@@ -72,11 +69,12 @@ import 'bootstrap'
 // const sb: string = require('./sb.png')
 
 export interface State {
-  readonly a: string,
-  readonly b: string,
-  readonly key: string | '',
+  readonly a: string
+  readonly b: string
+  readonly key: string | ''
   readonly show_intersection: boolean
   readonly show_uniqueness: boolean
+  readonly location: string
 }
 
 export const init: State = {
@@ -85,6 +83,7 @@ export const init: State = {
   key: '',
   show_intersection: true,
   show_uniqueness: true,
+  location: '',
 }
 
 export const placeholder= {
@@ -101,9 +100,29 @@ export const App = (store: Store<State>) => {
   global.store = store
   global.reset = () => store.set(init)
   store.storage_connect('uneek')
-  const key_input = html `<input ${value(store.at('key'))}>`
-  store.at('news').location_connect(News.to_hash, News.from_hash)
+  store.at('location').location_connect(s => '#' + s, s => s.slice(1))
 
+  const routes: Record<string, VNode> = {
+    links: html `
+      <div class='whitebox container'>
+        <h3>Links</h3>
+        <ul>
+          <li><a href="http://universaldependencies.org/">UD</a></li>
+        </ul>
+      </div>
+    `,
+
+    news: html `
+      <div class='whitebox container'>
+        <h3>News</h3>
+        <ul>
+          <li>Boomtime, 2nd day of Chaos in YOLD 3184: Added news section</li>
+        </ul>
+      </div>
+    `,
+  }
+
+  global.routes = routes
 
   const above = html`
   <nav class="navbar navbar-default navbar-inverse">
@@ -128,9 +147,9 @@ export const App = (store: Store<State>) => {
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">News</a></li>
+          <li><a href="#news">News</a></li>
           <li><a href="${doc}" download="uneek-documentation.pdf">Documentation</a></li>
-          <li><a href="#">Useful Links</a></li>
+          <li><a href="#links">Useful Links</a></li>
           <li><a href="#" data-target="#exampleModal" data-toggle="modal" >Refer to Uneek</a></li>
 
   <!-- Modal -->
@@ -160,7 +179,7 @@ export const App = (store: Store<State>) => {
   </nav>`
 
   const below = html`
-  <div class="row container w100">  
+  <div class="row container w100">
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-body">
@@ -169,13 +188,13 @@ export const App = (store: Store<State>) => {
             <h4>Set Operations</h4>
             <div class="checkbox">
               <label>
-              <input type="checkbox" ${checkedF(store.at('show_intersection'))}>
+              <input type="checkbox" ${checked(store.at('show_uniqueness'))}>
               uniqueness differentiation [(A–B) and (B–A)]</label>
             </div>
             <div class="checkbox">
               <label>
               <input type="checkbox" value="" ${checked(store.at('show_intersection'))}>
-              intersectional analysis  [A &#8745; B]</label>
+              intersection analysis  [A &#8745; B]</label>
             </div>
             <hr>
             <h4>Input format</h4>
@@ -216,7 +235,7 @@ export const App = (store: Store<State>) => {
           <li>Please send suggestions, bug reports etc. to <a href="mailto:per.malm@nordiska.uu.se?subject=Sent%20from%20Uneek%20site:">my email</a>.</li>
           <li> Check out <a href="#">Useful links</a> for some, well, useful stuff, such as parsers, concordance tools, etc.</li>
           <li> Processing large files may take some time; be patient.</li>
-	
+
         </ul>
       </div>
       <div class="col-md-4">
@@ -228,12 +247,12 @@ export const App = (store: Store<State>) => {
     When you download the results, you get all the analyses available in the "Settings" box to the left, that is:
 </p>
       <ul>
-		<li>uniqueness differentiation</li>
-		<li>intersectional analysis</li>
-		<li>shallow analysis </li>
-		<li>(and soon, deep analysis)  </li>
-      </ul>	
-	Results come in txt, listed for absolute frequency. 
+    <li>uniqueness differentiation</li>
+    <li>intersectional analysis</li>
+    <li>shallow analysis </li>
+    <li>(and soon, deep analysis)  </li>
+      </ul>
+  Results come in txt, listed for absolute frequency.
           </div>
           <div>
             <hr>
@@ -258,7 +277,7 @@ export const App = (store: Store<State>) => {
           </div>
           <div class="col-md-4 f-about">
             <h3 class="link">Remember</h3>
-	
+
                 <p> You shall know the difference between two polysemous words by the company one of them constantly rejects.
             </p>
           </div>
@@ -279,7 +298,7 @@ export const App = (store: Store<State>) => {
     <div class="last-div">
       <div class="container">
         <div class="row">
-	<div class="copyright">© 2018 Per Malm | <a target="_blank" rel="nofollow" href="https://opensource.org/licenses/MIT">MIT-license</a></div>
+  <div class="copyright">© 2018 Per Malm | <a target="_blank" rel="nofollow" href="https://opensource.org/licenses/MIT">MIT-license</a></div>
           </div>
         </div>
       </div>
@@ -292,16 +311,16 @@ export const App = (store: Store<State>) => {
   </footer>
     `
 
-  return () => {
+  function main() {
+    const state = store.get()
     const a = store.at('a')
     const b = store.at('b')
     const [A, a_err] = Utils.listen({}, () => Uneek.FromXML(`<text>${a.get()}</text>`))
     const [B, b_err] = Utils.listen({}, () => Uneek.FromXML(`<text>${b.get()}</text>`))
     const keys = Utils.keysof(A, B)
     const result = expr(() => {
-      const key = store.at('key').get()
-      if (keys.some(k => k == key)) {
-        return Uneek.VectorPair(A[key] || {}, B[key] || {})
+      if (keys.some(k => k == state.key)) {
+        return Uneek.VectorPair(A[state.key] || {}, B[state.key] || {})
       } else {
         return {}
       }
@@ -334,39 +353,36 @@ export const App = (store: Store<State>) => {
           // the error message:
           a_err && tag('.error', a_err),
           tag('div.marginalized',
-		  	tag('p.'),
+            tag('p'),
             tag('button.btn.btn-customi',s.attrs({type:"button"}),'Upload'),
             tag('button.btn.btn-customii',s.attrs({type:"button"}),'Clear'),
-		  	tag('p.'),
-		  
+            tag('p'),
           )
         )
       )
 
-
-    return tag('div.cols.h100',
-      above,
-      tag('.rows.w100.h100.container.col-md-4.marginalized.some-height',
-        input('a'),
-        tag('.w60.cols.h100',
-          //key_input,
+    return tag('.rows.w100.h100.container.col-md-4.marginalized.some-height',
+      input('a'),
+      tag('.w60.cols.h100',
+        tag('.rows.centered.marginalized',
           // force automatically listed attribute buttons to stay within margins
-          tag('.rows.centered.marginalized',s.attrs({style: "display: inline-block;text-align:center"}),
-            keys.map(
-              k =>
-                s.button(
-                  () => store.at('key').set(k),
-                  k,
-                  s.attrs({disabled: k === store.at('key').get()})))),
-          (store.get().key == '') ?
-          tag('.h100.thumbnail.centered.vcentered.rows', tag('span', 'Uneek')) :
-          tag('.rows.h100.marginalized',
-            store.get().show_uniqueness && count(only((a, b) => b == 0)),
-            store.get().show_intersection && count(only((a, b) => a > 0 && b > 0)),
-            store.get().show_uniqueness && count(only((a, b) => a == 0)),
-          )),
-        input('b')),
-      below)
-  }
+          s.style({display:'inline-block','text-align':'center'}),
+          keys.map(
+            k =>
+              s.button(
+                () => store.at('key').set(k),
+                k,
+                s.attrs({disabled: k === state.key})))),
+        (state.key == '') ?
+        tag('.h100.thumbnail.centered.vcentered.rows', tag('span', 'Uneek')) :
+        tag('.rows.h100.marginalized',
+          state.show_uniqueness && count(only((a, b) => b == 0)),
+          state.show_intersection && count(only((a, b) => a > 0 && b > 0)),
+          state.show_uniqueness && count(only((a, b) => a == 0)),
+        )),
+      input('b'))
+    }
+
+  return () => return tag('div.cols.h100', above, routes[store.get().location] || main(), below)
 }
 
