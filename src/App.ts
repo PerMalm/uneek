@@ -206,7 +206,7 @@ export const App = (store: Store<State>) => {
         <ul>
           <li>This web-tool is under development; so are the methods and thoughts revolving around it. See the <a href="#">News</a> section for relevant updates. </li>
           <li>See the <a href="#">Documentation</a> for how to use the tool, for methods, and for technical information.</li>
-          <li>Please send suggestions, bug reports etc. to <a href="mailto:per.malm@nordiska.uu.se?subject=Sent%20from%20Uneek%20site:">my email</a></li>.
+          <li>Please send suggestions, bug reports etc. to <a href="mailto:per.malm@nordiska.uu.se?subject=Sent%20from%20Uneek%20site:">my email</a>.</li>
           <li> Check out <a href="#">Useful links</a> for some, well, useful stuff, such as parsers, concordance tools, etc.</li>
           <li> Processing large files may take some time; be patient.</li>
 	
