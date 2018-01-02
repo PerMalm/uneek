@@ -8,7 +8,9 @@ import { tags, tag, s, TagData } from "snabbis"
 
 const {div, span, h1} = tags
 
-//const img = require('src/images/log.png')
+const logo = require('./images/uneekLogo.svg')
+const center = require('./images/uneekCenter.svg')
+
 //const doc = require('src/images/latextemplates.pdf')
 // TODO fixa buggen!!
 const doc = 'images/latextempates.pdf'
@@ -123,6 +125,10 @@ export const App = (store: Store<State>) => {
     `,
   }
 
+  const centered_logo = html`
+    <img alt="Logga" src="${center}" height='400px'>
+  `
+
   const above = html`
   <nav class="navbar navbar-default navbar-inverse">
     <div class="container-fluid">
@@ -135,7 +141,7 @@ export const App = (store: Store<State>) => {
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="#">
-          <img alt="Logga" src="X">
+          <img alt="Logga" src="${logo}" height='64px'>
         </a>
       </div>
 
@@ -374,7 +380,7 @@ export const App = (store: Store<State>) => {
                 k,
                 s.attrs({disabled: k === state.key})))),
         (state.key == '') ?
-        tag('.h100.thumbnail.centered.vcentered.rows', tag('span', 'Uneek')) :
+        tag('.h100.thumbnail.centered.vcentered.rows', centered_logo) :
         tag('.rows.h100.marginalized',
           state.show_uniqueness && count(only((a, b) => b == 0)),
           state.show_intersection && count(only((a, b) => a > 0 && b > 0)),
