@@ -1,13 +1,13 @@
 import * as Uneek from './Uneek'
 import * as Utils from './Utils'
-import * as News from "./News"
+// import * as News from "./News"
 
 import { VNode } from "snabbdom/vnode"
 import { attachTo } from "snabbdom/helpers/attachto"
 import { Store, Lens, Omit } from "reactive-lens"
 import { tags, tag, s, TagData } from "snabbis"
 
-export {News}
+// export {News} 
 
 const {div, span, h1} = tags
 
@@ -102,7 +102,7 @@ export const App = (store: Store<State>) => {
   global.reset = () => store.set(init)
   store.storage_connect('uneek')
   const key_input = html `<input ${value(store.at('key'))}>`
-  store.at('news').location_connect(News.to_hash, News.from_hash)
+ // store.at('news').location_connect(News.to_hash, News.from_hash)
 
 
   const above = html`
