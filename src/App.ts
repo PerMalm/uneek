@@ -277,7 +277,7 @@ export const App = (store: Store<State>) => {
       <div class="container">
         <div class="row">
           <div class="col-md-4 l-posts">
-            <h3 class="link"><img alt="Logga" src="X"></h3>
+            <img alt="Logga" src="${center}" height='64px'>
 
           </div>
           <div class="col-md-4 f-about">
