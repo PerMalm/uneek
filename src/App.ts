@@ -1,6 +1,8 @@
 import * as Uneek from './Uneek'
 import * as Utils from './Utils'
 
+import { checked } from './Utils'
+
 import { VNode } from "snabbdom/vnode"
 import { attachTo } from "snabbdom/helpers/attachto"
 import { Store, Lens, Omit } from "reactive-lens"
@@ -14,53 +16,6 @@ const center = require('./images/uneekCenter.svg')
 //const doc = require('src/images/latextemplates.pdf')
 // TODO fixa buggen!!
 const doc = 'images/latextempates.pdf'
-
-let next_unique = 0
-
-export interface StoreSplice {
-  selector: string,
-  store: Store<any>
-}
-
-export const checked = (store: Store<boolean>): StoreSplice => ({selector: 'checked', store})
-export const value = (store: Store<string>): StoreSplice => ({selector: 'value', store})
-
-export function html(snippets: TemplateStringsArray, ...syncs: (StoreSplice | string)[]): VNode {
-  let innerHTML = ''
-  const cbs = [] as (() => void)[]
-  syncs.forEach((sync: StoreSplice | string, i) => {
-    if (typeof sync == 'string') {
-      innerHTML += snippets[i]
-      innerHTML += sync
-    } else {
-      const id = `snabbis-unique-${++next_unique}`
-      const {store, selector} = sync
-      innerHTML += snippets[i]
-      innerHTML += ` id=${id} `
-      cbs.push(() => window.requestAnimationFrame(() => {
-        const elm = document.getElementById(id) as HTMLInputElement | null
-        if (elm) {
-          if ((elm as any)[selector] != store.get()) {
-            (elm as any)[selector] = store.get()
-          }
-          store.ondiff((z: any, a: any) => z !== a && ((elm as any)[selector] = z))
-          elm.onchange = () => store.set((elm as any)[selector])
-          elm.oninput = () => store.set((elm as any)[selector])
-        } else {
-          // console.error(`Element not found: ${id} ${s}`)
-        }
-      }))
-    }
-  })
-  if (snippets.length > syncs.length) {
-    innerHTML += snippets[snippets.length - 1]
-  }
-  return tag('div',
-    s.key(++next_unique),
-    s.props({ innerHTML }),
-    s.hook('init')(() => cbs.forEach(k => k())),
-  )
-}
 
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import '../node_modules/bootstrap/dist/css/bootstrap-theme.min.css'
@@ -77,6 +32,7 @@ export interface State {
   readonly show_intersection: boolean
   readonly show_uniqueness: boolean
   readonly location: string
+  readonly xml_input: boolean
 }
 
 export const init: State = {
@@ -86,6 +42,7 @@ export const init: State = {
   show_intersection: true,
   show_uniqueness: true,
   location: '',
+  xml_input: true,
 }
 
 export const placeholder= {
@@ -97,12 +54,14 @@ export const show = (s: any) => JSON.stringify(s, undefined, 2)
 
 export const expr = <A>(k: () => A) => k()
 
+const html = Utils.html()
+
 export const App = (store: Store<State>) => {
   const global = window as any
   global.store = store
   global.reset = () => store.set(init)
   store.storage_connect('uneek')
-  const key_input = html `<input ${value(store.at('key'))}>`
+
   store.at('location').location_connect(s => '#' + s, s => s.slice(1))
 
   const routes: Record<string, VNode> = {
@@ -204,10 +163,10 @@ export const App = (store: Store<State>) => {
             <hr>
             <h4>Input format</h4>
 <div class="radio-inline">
-   <label><input type="radio" name="optradio">txt</label>
+   <label><input type="radio" name="optradio" ${checked(store.at('xml_input').via(Lens.iso(x => !x, x => !x)))}>txt</label>
 </div>
 <div class="radio-inline">
-   <label><input type="radio" name="optradio">xml</label>
+   <label><input type="radio" name="optradio" ${checked(store.at('xml_input'))}>xml</label>
 </div>
     <!--        <hr>
             <h4>Statistics</h4>
@@ -320,8 +279,17 @@ export const App = (store: Store<State>) => {
     const state = store.get()
     const a = store.at('a')
     const b = store.at('b')
-    const [A, a_err] = Utils.listen({}, () => Uneek.FromXML(`<text>${a.get()}</text>`))
-    const [B, b_err] = Utils.listen({}, () => Uneek.FromXML(`<text>${b.get()}</text>`))
+    function parser(s: string): Uneek.Text {
+      if (!s) {
+        return {}
+      } else if (state.xml_input) {
+        return Uneek.FromXML(s)
+      } else {
+        return {text: Uneek.Vectorize(s)}
+      }
+    }
+    const [A, a_err] = Utils.listen({}, () => parser(state.a))
+    const [B, b_err] = Utils.listen({}, () => parser(state.b))
     const errs = {a: a_err, b: b_err}
     const keys = Utils.keysof(A, B)
     const result = expr(() => {

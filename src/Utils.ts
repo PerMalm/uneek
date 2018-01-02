@@ -80,3 +80,55 @@ export function keysof(...objs: Record<string, any>[]) {
   return uniq(([] as string[]).concat(...objs.map(obj => Object.keys(obj))))
 }
 
+import { VNode } from "snabbdom/vnode"
+import { Store } from "reactive-lens"
+import { tag, s } from "snabbis"
+
+export interface StoreSplice {
+  selector: string,
+  store: Store<any>
+}
+
+export const checked = (store: Store<boolean>): StoreSplice => ({selector: 'checked', store})
+export const value = (store: Store<string>): StoreSplice => ({selector: 'value', store})
+
+export function html(prefix='snabbis-unique-') {
+  let next_unique = 0
+  return function (snippets: TemplateStringsArray, ...syncs: (StoreSplice | string)[]): VNode {
+    let innerHTML = ''
+    const cbs = [] as (() => void)[]
+    syncs.forEach((sync: StoreSplice | string, i) => {
+      if (typeof sync == 'string') {
+        innerHTML += snippets[i]
+        innerHTML += sync
+      } else {
+        const id = prefix + ++next_unique
+        const {store, selector} = sync
+        innerHTML += snippets[i]
+        innerHTML += ` id=${id} `
+        cbs.push(() => window.requestAnimationFrame(() => {
+          const elm = document.getElementById(id) as HTMLInputElement | null
+          if (elm) {
+            if ((elm as any)[selector] != store.get()) {
+              (elm as any)[selector] = store.get()
+            }
+            store.ondiff((z: any, a: any) => z !== a && ((elm as any)[selector] = z))
+            elm.onchange = () => store.set((elm as any)[selector])
+            elm.oninput = () => store.set((elm as any)[selector])
+          } else {
+            // console.error(`Element not found: ${id}`)
+          }
+        }))
+      }
+    })
+    if (snippets.length > syncs.length) {
+      innerHTML += snippets[snippets.length - 1]
+    }
+    return tag('div',
+      s.key(++next_unique),
+      s.props({ innerHTML }),
+      s.hook('init')(() => cbs.forEach(k => k())),
+    )
+  }
+}
+
