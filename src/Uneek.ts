@@ -66,7 +66,7 @@ export function FromXML(d: Document | string): Text {
     if (node.nodeType == 1) {
       const attrs = node.attributes
       const t = (node as any).tagName || '<?>'
-      Utils.Arr(attrs).map(attr => {
+      Array.from(attrs).map(attr => {
         bump(t + '.' + attr.name, attr.value)
       })
     } else if (node.nodeType == 3) {

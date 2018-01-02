@@ -55,14 +55,6 @@ export function record_filter<A>(x: Record<string, A>, k: (a: A, id: string) => 
   return out
 }
 
-export function Arr<A>(xs: ArrayLike<A>): A[] {
-  const out = [] as A[]
-  for (let i = 0; i < xs.length; i++) {
-    out.push(xs[i])
-  }
-  return out
-}
-
 export function succ(x: undefined | number): number {
   return x === undefined ? 1 : x + 1
 }
