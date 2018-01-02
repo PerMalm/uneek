@@ -122,8 +122,6 @@ export const App = (store: Store<State>) => {
     `,
   }
 
-  global.routes = routes
-
   const above = html`
   <nav class="navbar navbar-default navbar-inverse">
     <div class="container-fluid">
@@ -317,6 +315,7 @@ export const App = (store: Store<State>) => {
     const b = store.at('b')
     const [A, a_err] = Utils.listen({}, () => Uneek.FromXML(`<text>${a.get()}</text>`))
     const [B, b_err] = Utils.listen({}, () => Uneek.FromXML(`<text>${b.get()}</text>`))
+    const errs = {a: a_err, b: b_err}
     const keys = Utils.keysof(A, B)
     const result = expr(() => {
       if (keys.some(k => k == state.key)) {
@@ -351,7 +350,7 @@ export const App = (store: Store<State>) => {
             s.classed('textarea'),
             s.attrs({"placeholder": placeholder[name]})),
           // the error message:
-          a_err && tag('.error', a_err),
+          errs[name] && tag('.error', errs[name]),
           tag('div.marginalized',
             tag('p'),
             tag('button.btn.btn-customi',s.attrs({type:"button"}),'Upload'),
