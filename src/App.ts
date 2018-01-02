@@ -145,22 +145,6 @@ export const App = (store: Store<State>) => {
       </div>
     </div>
   </div>
-       <!-- <form class="navbar-form navbar-left">
-          <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search">
-          </div>
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form> -->
-
-      <!--
-  <div class="panel panel-default">
-    <div class="panel-body">
-      Panel content
-    </div>
-    <div class="panel-footer">Panel footer</div>
-  </div>
-
-      -->
 
         </ul>
       </div><!-- /.navbar-collapse -->
@@ -168,7 +152,7 @@ export const App = (store: Store<State>) => {
   </nav>`
 
   const below = html`
-  <div class="row container w100">
+  <div class="row container w100">  
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-body">
@@ -178,38 +162,37 @@ export const App = (store: Store<State>) => {
             <div class="checkbox">
               <label>
               <input type="checkbox" value="">
-              Uniqueness differentiation [(A–B) and (B–A)]</label>
+              uniqueness differentiation [(A–B) and (B–A)]</label>
             </div>
             <div class="checkbox">
               <label>
               <input type="checkbox" value="" ${checked(store.at('show_intersection'))}>
-              Intersectional analysis  [A &#8745; B]</label>
+              intersectional analysis  [A &#8745; B]</label>
             </div>
             <hr>
             <h4>Input format</h4>
-            <label class="checkbox-inline">
-            <input type="checkbox" value="">
-
-            txt</label>
-            <label class="checkbox-inline">
-            <input type="checkbox" value="">
-            xml</label>
+<div class="radio-inline">
+   <label><input type="radio" name="optradio">txt</label>
+</div>
+<div class="radio-inline">
+   <label><input type="radio" name="optradio">xml</label>
+</div>
     <!--        <hr>
             <h4>Statistics</h4>
             <label class="checkbox-inline">
             <input type="checkbox" value="">
-            Absolute Numbers</label>
+            absolute numbers</label>
             <label class="checkbox-inline">
             <input type="checkbox" value="">
-            Data Saturation</label> -->
+            data saturation</label> -->
             <hr>
-            <h4>Syntactic Operations</h4>
+            <h4>Syntactic Analysis</h4>
             <label class="checkbox-inline">
             <input type="checkbox" value="">
-            Shallow</label>
-            <label class="checkbox-inline">
+            shallow</label>
+         <!--   <label class="checkbox-inline">
             <input type="checkbox" value="">
-            Deep</label>
+            deep</label> -->
           </div>
 
         </div>
@@ -222,7 +205,7 @@ export const App = (store: Store<State>) => {
         <ul>
           <li>This web-tool is under development; so are the methods and thoughts revolving around it. See the <a href="#">News</a> section for relevant updates. </li>
           <li>See the <a href="#">Documentation</a> for how to use the tool, for methods, and for technical information.</li>
-          <li>Please send suggestions, bug reports etc. to my email <a href="#"> per.malm@nordiska.uu.se</a></li>
+          <li>Please send suggestions, bug reports etc. to <a href="mailto:per.malm@nordiska.uu.se?subject=Sent%20from%20Uneek%20site:">my email</a></li>.
           <li> Check out <a href="#">Useful links</a> for some, well, useful stuff, such as parsers, concordance tools, etc.</li>
           <li> Processing large files may take some time; be patient.</li>
 	
@@ -233,29 +216,23 @@ export const App = (store: Store<State>) => {
           <div class="panel-body">
             <h3 class="mrgn-tp-0">Download Results</h3>
       <hr>
-<h4>
-    When you download the results, you get all the analyses available in the "Settings box" to the left, that is:
 <p>
-      </p><ul>
-		<li>Uniqueness Differentiation</li>
-		<li>Intersectional Analysis</li>
-	<!--	<li>Absolute Frequency</li>
-		<li>Data Saturation </li> -->
-		<li>Shallow Analysis </li>
-		<li>Deep Analysis </li>
-      </ul>
-<p></p>
-	
-	 The results are listed for for absolute frequency in and given in txt format. 
-<p></p>
-	
-        </h4>
+    When you download the results, you get all the analyses available in the "Settings" box to the left, that is:
+</p>
+      <ul>
+		<li>uniqueness differentiation</li>
+		<li>intersectional analysis</li>
+		<li>shallow analysis </li>
+		<li>(and soon, deep analysis)  </li>
+      </ul>	
+	Results come in txt, listed for absolute frequency. 
           </div>
           <div>
             <hr>
   <center> <button type="button" class="btn btn-customi">Download Results</button>
   <button type="button" class="btn btn-customii ">Clear All Fields</button> </center>
-
+<p></p>
+        </div>
         </div>
         </div>
 
@@ -267,24 +244,23 @@ export const App = (store: Store<State>) => {
     <div class="inner-footer">
       <div class="container">
         <div class="row">
-          <div class="col-md-4 f-about">
+          <div class="col-md-4 l-posts">
             <h3 class="link"><img alt="Logga" src="X"></h3>
+
+          </div>
+          <div class="col-md-4 f-about">
+            <h3 class="link">Remember</h3>
+	
                 <p> You shall know the difference between two polysemous words by the company one of them constantly rejects.
             </p>
           </div>
           <div class="col-md-4 l-posts">
-            <h3 class="link">News</h3>
-            <ul>
-              <li><a href="#">Newspost1</a></li>
-              <li><a href="#">Newspost2</a></li>
-              <li><a href="#">Newspost3</a></li>
-              <li><a href="#">Newspost4</a></li>
-            </ul>
+
           </div>
           <div class="col-md-4 f-contact">
             <h3 class="link">Contact</h3>
             <a href="#">
-              <p><i class="fa fa-envelope"></i> per.malm@nordiska.uu.se</p>
+              <p><i class="fa fa-envelope"></i> <span class="glyphicon glyphicon-envelope"></span> <a href="mailto:per.malm@nordiska.uu.se?subject=Sent%20from%20Uneek%20site:">Per Malm</a></p>
             </a>
           </div>
         </div>
@@ -295,12 +271,10 @@ export const App = (store: Store<State>) => {
     <div class="last-div">
       <div class="container">
         <div class="row">
-          <div class="copyright">
-          <img alt="CClogga" src="/images/cc.png">
+	<div class="copyright">© 2018 Per Malm | <a target="_blank" rel="nofollow" href="https://opensource.org/licenses/MIT">MIT-license</a></div>
           </div>
         </div>
       </div>
-
 
 
 
@@ -344,7 +318,7 @@ export const App = (store: Store<State>) => {
       (name: 'a' | 'b') =>
       tag('.w20.thumbnail',
         tag('.cols.h100.centered.vcentered',
-          tag('caption', tag('h3', 'Text ' + name.toUpperCase())),
+          tag('caption', tag('h3', 'Field ' + name.toUpperCase())),
           s.textarea(
             store.at(name), undefined, undefined,
             s.classed('textarea'),
@@ -352,8 +326,11 @@ export const App = (store: Store<State>) => {
           // the error message:
           a_err && tag('.error', a_err),
           tag('div.marginalized',
+		  	tag('p.'),
             tag('button.btn.btn-customi',s.attrs({type:"button"}),'Upload'),
             tag('button.btn.btn-customii',s.attrs({type:"button"}),'Clear'),
+		  	tag('p.'),
+		  
           )
         )
       )
