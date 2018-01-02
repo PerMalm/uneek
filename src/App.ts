@@ -355,8 +355,8 @@ export const App = (store: Store<State>) => {
           state.show_uniqueness && count(only((a, b) => a == 0)),
         )),
       input('b'))
-    }
+  }
 
-  return () => return tag('div.cols.h100', above, routes[store.get().location] || main(), below)
+  return () => tag('div.cols.h100', above, routes[store.get().location] || main(), below)
 }
 
