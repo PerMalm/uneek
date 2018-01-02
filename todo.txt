@@ -1,6 +1,6 @@
 To do lista:
 
-	* Fixa attribut listan ovanför resultatlådorna så att de lägger sig på en ny rad när de blir för många. De bör förhålla sig till radikalerna resultatlåda vänsters vänsterkant och resultatlåda högers högerkant. 
+	X Fixa attribut listan ovanför resultatlådorna så att de lägger sig på en ny rad när de blir för många. De bör förhålla sig till radikalerna resultatlåda vänsters vänsterkant och resultatlåda högers högerkant. 
 	* Fixa en ’’arbetar’’-symbol: typ ’glyphicon glyphicon-hourglass’ (svårt)
 	* Matcha marginalen i de tre lådorna under unikhetslådorna med varandra. 
 	* Fixa så att undermarginalen i resultatlådorna matchar undermarginalen med inputlådorna. 
