@@ -162,7 +162,6 @@ export const App = (store: Store<State>) => {
 
       -->
 
-          </li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -254,7 +253,7 @@ export const App = (store: Store<State>) => {
           </div>
           <div>
             <hr>
-  <center> <button type="button" class="btn btn-customi">Download Results</span></button>
+  <center> <button type="button" class="btn btn-customi">Download Results</button>
   <button type="button" class="btn btn-customii ">Clear All Fields</button> </center>
 
         </div>
@@ -366,7 +365,8 @@ export const App = (store: Store<State>) => {
         input('a'),
         tag('.w60.cols.h100',
           //key_input,
-          tag('.rows.centered.marginalized',
+          // force automatically listed attribute buttons to stay within margins
+          tag('.rows.centered.marginalized',s.attrs({style: "display: inline-block;text-align:center"}),
             keys.map(
               k =>
                 s.button(

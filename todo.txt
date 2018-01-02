@@ -1,6 +1,6 @@
 To do lista:
 
-	* Fixa xml-listan ovanför resultatlådorna:
+	X Fixa xml-listan ovanför resultatlådorna:
 	* Fixa en ’’arbetar’’-symbol: typ ’glyphicon glyphicon-hourglass’
 	* Matcha marginalen i de tre lådorna under unikhetslådorna med varandra. 
 	* Fixa bildimport.
