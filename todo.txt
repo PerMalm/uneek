@@ -1,15 +1,7 @@
 To do lista:
 
-<<<<<<< HEAD
-	X Fixa xml-listan ovanför resultatlådorna:
-	* Fixa en ’’arbetar’’-symbol: typ ’glyphicon glyphicon-hourglass’
-||||||| merged common ancestors
-	* Fixa xml-listan ovanför resultatlådorna:
-	* Fixa en ’’arbetar’’-symbol: typ ’glyphicon glyphicon-hourglass’
-=======
-	* Fixa attribut listan ovanför resultatlådorna så att de lägger sig på en ny rad när de blir för många. De bör förhålla sig till radikalerna resultatlåda vänsters vänsterkant och resultatlåda högers högerkant. 
+	X Fixa attribut listan ovanför resultatlådorna så att de lägger sig på en ny rad när de blir för många. De bör förhålla sig till radikalerna resultatlåda vänsters vänsterkant och resultatlåda högers högerkant. 
 	* Fixa en ’’arbetar’’-symbol: typ ’glyphicon glyphicon-hourglass’ (svårt)
->>>>>>> 6b8a3370e01b35ead0a85ca256d3bea4a171064d
 	* Matcha marginalen i de tre lådorna under unikhetslådorna med varandra. 
 	* Fixa så att undermarginalen i resultatlådorna matchar undermarginalen med inputlådorna. 
 	* Fixa bildimport. (vi kör det på någon annan dator). 

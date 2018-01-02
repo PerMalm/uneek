@@ -1,10 +1,14 @@
 import * as Uneek from './Uneek'
 import * as Utils from './Utils'
+import * as News from "./News"
 
 import { VNode } from "snabbdom/vnode"
 import { attachTo } from "snabbdom/helpers/attachto"
 import { Store, Lens, Omit } from "reactive-lens"
 import { tags, tag, s, TagData } from "snabbis"
+
+export {News}
+
 const {div, span, h1} = tags
 
 //const img = require('src/images/log.png')
@@ -19,7 +23,7 @@ export interface StoreSplice {
   store: Store<any>
 }
 
-export const checked = (store: Store<boolean>): StoreSplice => ({selector: 'checked', store})
+export const checkedF = (store: Store<boolean>): StoreSplice => ({selector: 'checked', store})
 export const value = (store: Store<string>): StoreSplice => ({selector: 'value', store})
 
 export function html(snippets: TemplateStringsArray, ...syncs: (StoreSplice | string)[]): VNode {
@@ -72,6 +76,7 @@ export interface State {
   readonly b: string,
   readonly key: string | '',
   readonly show_intersection: boolean
+  readonly show_uniqueness: boolean
 }
 
 export const init: State = {
@@ -79,6 +84,7 @@ export const init: State = {
   b: '',
   key: '',
   show_intersection: true,
+  show_uniqueness: true,
 }
 
 export const placeholder= {
@@ -96,6 +102,8 @@ export const App = (store: Store<State>) => {
   global.reset = () => store.set(init)
   store.storage_connect('uneek')
   const key_input = html `<input ${value(store.at('key'))}>`
+  store.at('news').location_connect(News.to_hash, News.from_hash)
+
 
   const above = html`
   <nav class="navbar navbar-default navbar-inverse">
@@ -161,7 +169,7 @@ export const App = (store: Store<State>) => {
             <h4>Set Operations</h4>
             <div class="checkbox">
               <label>
-              <input type="checkbox" value="">
+              <input type="checkbox" ${checkedF(store.at('show_intersection'))}>
               uniqueness differentiation [(A–B) and (B–A)]</label>
             </div>
             <div class="checkbox">
@@ -353,9 +361,9 @@ export const App = (store: Store<State>) => {
           (store.get().key == '') ?
           tag('.h100.thumbnail.centered.vcentered.rows', tag('span', 'Uneek')) :
           tag('.rows.h100.marginalized',
-            count(only((a, b) => b == 0)),
+            store.get().show_uniqueness && count(only((a, b) => b == 0)),
             store.get().show_intersection && count(only((a, b) => a > 0 && b > 0)),
-            count(only((a, b) => a == 0)),
+            store.get().show_uniqueness && count(only((a, b) => a == 0)),
           )),
         input('b')),
       below)
