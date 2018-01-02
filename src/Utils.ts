@@ -84,31 +84,32 @@ export interface StoreSplice {
 export const checked = (store: Store<boolean>): StoreSplice => ({selector: 'checked', store})
 export const value = (store: Store<string>): StoreSplice => ({selector: 'value', store})
 
-export function html(prefix='snabbis-unique-') {
+export function html(data_name='snabbis-unique') {
   let next_unique = 0
   return function (snippets: TemplateStringsArray, ...syncs: (StoreSplice | string)[]): VNode {
     let innerHTML = ''
-    const cbs = [] as (() => void)[]
+    const cbs = [] as ((elm: Element) => void)[]
     syncs.forEach((sync: StoreSplice | string, i) => {
       if (typeof sync == 'string') {
         innerHTML += snippets[i]
         innerHTML += sync
       } else {
-        const id = prefix + ++next_unique
+        const id = '' + ++next_unique
         const {store, selector} = sync
         innerHTML += snippets[i]
-        innerHTML += ` id=${id} `
-        cbs.push(() => window.requestAnimationFrame(() => {
-          const elm = document.getElementById(id) as HTMLInputElement | null
-          if (elm) {
-            if ((elm as any)[selector] != store.get()) {
-              (elm as any)[selector] = store.get()
+        innerHTML += ` data-${data_name}='${id}' `
+        cbs.push((elm: Element) => window.requestAnimationFrame(() => {
+          const elms = Array.from(elm.querySelectorAll(`[data-${data_name}='${id}']`))
+          elms.forEach((e: HTMLInputElement) => {
+            if ((e as any)[selector] != store.get()) {
+              (e as any)[selector] = store.get()
             }
-            store.ondiff((z: any, a: any) => z !== a && ((elm as any)[selector] = z))
-            elm.onchange = () => store.set((elm as any)[selector])
-            elm.oninput = () => store.set((elm as any)[selector])
-          } else {
-            // console.error(`Element not found: ${id}`)
+            store.ondiff((z: any, a: any) => z !== a && ((e as any)[selector] = z))
+            e.onchange = () => store.set((e as any)[selector])
+            e.oninput = () => store.set((e as any)[selector])
+          })
+          if (elms.length == 0) {
+            console.error(`No elements found: ${id}`)
           }
         }))
       }
@@ -119,7 +120,8 @@ export function html(prefix='snabbis-unique-') {
     return tag('div',
       s.key(++next_unique),
       s.props({ innerHTML }),
-      s.hook('init')(() => cbs.forEach(k => k())),
+      s.hook('insert')(vn => vn.elm && cbs.forEach(k => k(vn.elm as Element))),
+      s.hook('update')((_, vn) => vn.elm && cbs.forEach(k => k(vn.elm as Element))),
     )
   }
 }

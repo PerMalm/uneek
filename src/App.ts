@@ -54,8 +54,6 @@ export const show = (s: any) => JSON.stringify(s, undefined, 2)
 
 export const expr = <A>(k: () => A) => k()
 
-const html = Utils.html()
-
 export const App = (store: Store<State>) => {
   const global = window as any
   global.store = store
@@ -63,6 +61,8 @@ export const App = (store: Store<State>) => {
   store.storage_connect('uneek')
 
   store.at('location').location_connect(s => '#' + s, s => s.slice(1))
+
+  const html = Utils.html()
 
   const routes: Record<string, VNode> = {
     links: html `
