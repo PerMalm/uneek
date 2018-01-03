@@ -13,6 +13,8 @@ const {div, span, h1} = tags
 const logo = require('./images/uneekLogo.svg')
 const center = require('./images/uneekCenter.svg')
 
+// dokumentation: tag(tagnamn.klass.klass..., attribut, namn)
+
 //const doc = require('src/images/latextemplates.pdf')
 // TODO fixa buggen!!
 const doc = 'images/latextempates.pdf'
@@ -59,6 +61,11 @@ export const App = (store: Store<State>) => {
   global.store = store
   global.reset = () => store.set(init)
   store.storage_connect('uneek')
+  store.at('xml_input').ondiff(b => {
+    if (!b && store.get().key != 'text') {
+      store.update({key: 'text'})
+    }
+  })
 
   store.at('location').location_connect(s => '#' + s, s => s.slice(1))
 
@@ -143,7 +150,7 @@ export const App = (store: Store<State>) => {
   </nav>`
 
   const below = html`
-  <div class="row container w100">
+  <div class="row container w100" style="padding-right:0">
       <div class="col-md-4">
         <div class="panel panel-default">
           <div class="panel-body">
@@ -202,7 +209,7 @@ export const App = (store: Store<State>) => {
 
         </ul>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" style="padding-right:0">
         <div class="panel panel-default">
           <div class="panel-body">
             <h3 class="mrgn-tp-0">Download Results</h3>
@@ -220,8 +227,10 @@ export const App = (store: Store<State>) => {
           </div>
           <div>
             <hr>
-  <center> <button type="button" class="btn btn-customi">Download Results</button>
-  <button type="button" class="btn btn-customii ">Clear All Fields</button> </center>
+              <center>
+                <button type="button" class="btn btn-customi">Download Results</button>
+                <button type="button" class="btn btn-customii">Clear All Fields</button>
+              </center>
 <p></p>
         </div>
         </div>
@@ -328,8 +337,29 @@ export const App = (store: Store<State>) => {
           errs[name] && tag('.error', errs[name]),
           tag('div.marginalized',
             tag('p'),
-            tag('button.btn.btn-customi',s.attrs({type:"button"}),'Upload'),
-            tag('button.btn.btn-customii',s.attrs({type:"button"}),'Clear'),
+            tag('label.btn.btn-customi',
+            'Upload',
+            tag('input',
+              s.attrs({'type': 'file'}),
+              s.css({display: 'none'}),
+              s.on('change')((e: Event) => {
+                const me = e.target as HTMLInputElement
+                if (me && me.files && me.files.length > 0) {
+                  const file = me.files[0]
+                  const fr = new FileReader()
+                  const text = fr.readAsText(file)
+                  fr.onloadend = (ev: ProgressEvent) => {
+                    if (fr.readyState == fr.DONE) {
+                      store.at(name).set(fr.result)
+                    }
+                  }
+                }
+              }))),
+            s.button(
+              "Clear", // label
+              () => store.at(name).set(""), // atClick
+              s.classed('btn btn-customii')
+              ),
             tag('p'),
           )
         )
@@ -338,18 +368,19 @@ export const App = (store: Store<State>) => {
     return tag('.rows.w100.h100.container.col-md-4.marginalized.some-height',
       input('a'),
       tag('.w60.cols.h100',
+        (store.at('xml_input').get() &&
         tag('.rows.centered.marginalized',
           // force automatically listed attribute buttons to stay within margins
           s.style({display:'inline-block','text-align':'center'}),
           keys.map(
             k =>
               s.button(
-                () => store.at('key').set(k),
-                k,
-                s.attrs({disabled: k === state.key})))),
-        (state.key == '') ?
+                k, // label
+                () => store.at('key').set(k), // atClick
+                s.attrs({disabled: k === state.key}))))),
+        ((state.key == '') || (!state.show_uniqueness && !state.show_intersection)) ?
         tag('.h100.thumbnail.centered.vcentered.rows', centered_logo) :
-        tag('.rows.h100.marginalized',
+        tag('.rows.h100.marginalized.some-height.padding-b7',
           state.show_uniqueness && count(only((a, b) => b == 0)),
           state.show_intersection && count(only((a, b) => a > 0 && b > 0)),
           state.show_uniqueness && count(only((a, b) => a == 0)),

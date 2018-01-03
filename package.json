@@ -9,8 +9,8 @@
   "dependencies": {
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",
-    "reactive-lens": "^0.2.0",
-    "snabbis": "^0.6.0"
+    "reactive-lens": "^0.3.0",
+    "snabbis": "^0.10.0"
   },
   "devDependencies": {
     "@types/jquery": "^3.2.17",
