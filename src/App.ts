@@ -355,6 +355,7 @@ export const App = (store: Store<State>) => {
       )
 
     return tag('.rows.w100.h100.container.col-md-4.marginalized.some-height',
+      s.key('main'),
       input('a'),
       tag('.w60.cols.h100',
         tag('.rows.centered.marginalized',
