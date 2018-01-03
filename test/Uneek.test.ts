@@ -121,34 +121,34 @@ test('export', assert => {
   assert.deepEqual(
     Uneek.full_export(A, B),
     [
-      'key,occurrences,a,b',
-      'w,En,1,1',
-      'w,båt,1,0',
-      'w,liter,0,1',
-      'w,filmjölk,0,1',
-      'w.pos,NN,1,1',
-      'w.pos,DT,1,0',
-      'w.pos,D,0,1'
-    ].join('\n')
+      '"key","occurrences","a","b"',
+      '"w","En","1","1"',
+      '"w","båt","1","0"',
+      '"w","liter","0","1"',
+      '"w","filmjölk","0","1"',
+      '"w.pos","NN","1","1"',
+      '"w.pos","DT","1","0"',
+      '"w.pos","D","0","1"'
+    ].join('\r\n')
   )
   assert.deepEqual(
     Uneek.small_export(Uneek.VectorPair(A.w, B.w)),
     [
-      'occurrences,a,b',
-      'En,1,1',
-      'båt,1,0',
-      'liter,0,1',
-      'filmjölk,0,1',
-    ].join('\n')
+      '"occurrences","a","b"',
+      '"En","1","1"',
+      '"båt","1","0"',
+      '"liter","0","1"',
+      '"filmjölk","0","1"',
+    ].join('\r\n')
   )
   assert.deepEqual(
     Uneek.small_export(Uneek.VectorPair(A['w.pos'], B['w.pos'])),
     [
-      'occurrences,a,b',
-      'NN,1,1',
-      'DT,1,0',
-      'D,0,1'
-    ].join('\n')
+      '"occurrences","a","b"',
+      '"NN","1","1"',
+      '"DT","1","0"',
+      '"D","0","1"'
+    ].join('\r\n')
   )
   assert.end()
 })

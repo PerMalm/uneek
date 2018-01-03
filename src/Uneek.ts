@@ -90,13 +90,15 @@ export const full = (a: Text, b: Text) =>
         flat(VectorPair(a[key] || {}, b[key] || {}))
           .map(v => ({key, ...v}))))
 
-export type Table = string[][]
+export type Table = (string | number)[][]
 
 export function table<K extends string>(rs: Record<K, number | string>[], order: K[]): Table {
-  return [order as string[]].concat(rs.map(r => order.map((k: K) => r[k] + '')))
+  return [order as (string | number)[]].concat(rs.map(r => order.map((k: K) => r[k])))
 }
 
-export const csv = (xss: string[][]) => xss.map(xs => xs.join(',')).join('\n')
+const CSV = require('comma-separated-values')
+
+export const csv = (xss: (string | number)[][]) => (new CSV(xss)).encode()
 
 export const full_export = (a: Text, b: Text) =>
   csv(table(full(a, b), ['key', 'occurrences', 'a', 'b']))
