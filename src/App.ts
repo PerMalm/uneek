@@ -330,7 +330,24 @@ export const App = (store: Store<State>) => {
           errs[name] && tag('.error', errs[name]),
           tag('div.marginalized',
             tag('p'),
-            tag('button.btn.btn-customi',s.attrs({type:"button"}),'Upload'),
+            tag('label.btn.btn-customi',
+              'Upload',
+              tag('input',
+                s.attrs({'type': 'file'}),
+                s.css({display: 'none'}),
+                s.on('change')((e: Event) => {
+                  const me = e.target as HTMLInputElement
+                  if (me && me.files && me.files.length > 0) {
+                    const file = me.files[0]
+                    const fr = new FileReader()
+                    const text = fr.readAsText(file)
+                    fr.onloadend = (ev: ProgressEvent) => {
+                      if (fr.readyState == fr.DONE) {
+                        store.at(name).set(fr.result)
+                      }
+                    }
+                  }
+                }))),
             tag('button.btn.btn-customii',s.attrs({type:"button"}),'Clear'),
             tag('p'),
           )
