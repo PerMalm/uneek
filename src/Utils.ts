@@ -129,3 +129,13 @@ export function html(data_name='snabbis-unique') {
 export function flatten<A>(xs: A[][]): A[] {
   return ([] as A[]).concat(...xs)
 }
+
+export function download(s: string, filename: string, mimetype='text/plain') {
+  const a = document.createElement('a')
+  a.setAttribute('href', `data:${mimetype};charset=utf-8,${encodeURIComponent(s)}`)
+  a.setAttribute('download', filename)
+  a.style.display = 'none'
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+}

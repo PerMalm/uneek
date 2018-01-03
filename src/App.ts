@@ -305,8 +305,12 @@ export const App = (store: Store<State>) => {
       Utils.record_filter(result, ({a, b}) => p(a,b))
 
     const count =
-      (w: Uneek.VectorPair) =>
+      (w: Uneek.VectorPair, filename: string) =>
       tag('.whitebox.equal-width.scroll',
+        s.button(
+          'Download',
+          () => Utils.download(Uneek.small_export(w), `${filename}.csv`),
+          s.classed('btn btn-customii')),
         Uneek.flat(w).map(({a, b, occurrences}) =>
           tag('.rows',
             tag('span.w20.r', a > 0 && a),
@@ -342,15 +346,15 @@ export const App = (store: Store<State>) => {
           keys.map(
             k =>
               s.button(
-                () => store.at('key').set(k),
                 k,
+                () => store.at('key').set(k),
                 s.attrs({disabled: k === state.key})))),
         (state.key == '') ?
         tag('.h100.thumbnail.centered.vcentered.rows', centered_logo) :
         tag('.rows.h100.marginalized',
-          state.show_uniqueness && count(only((a, b) => b == 0)),
-          state.show_intersection && count(only((a, b) => a > 0 && b > 0)),
-          state.show_uniqueness && count(only((a, b) => a == 0)),
+          state.show_uniqueness && count(only((a, b) => b == 0), 'a-only'),
+          state.show_intersection && count(only((a, b) => a > 0 && b > 0), 'intersection'),
+          state.show_uniqueness && count(only((a, b) => a == 0), 'b-only'),
         )),
       input('b'))
   }
