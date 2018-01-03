@@ -314,15 +314,17 @@ export const App = (store: Store<State>) => {
       Utils.record_filter(result, ({a, b}) => p(a,b))
 
     const count =
-      (w: Uneek.VectorPair) =>
+      (w: Uneek.VectorPair, filename: string) =>
       tag('.whitebox.equal-width.scroll',
-        Utils.record_traverse(w, ({a, b}, k) => ({a, b, k}))
-          .sort((l, r) => (r.a + r.b) - (l.a + l.b))
-          .map(({a, b, k}) =>
-            tag('.rows',
-              tag('span.w20.r', a > 0 && a),
-              tag('span.w60.c', k, a > 0 && b > 0 && tag('span.small', ` (${a + b})`)),
-              tag('span.w20.l', b > 0 && b))))
+        s.button(
+          'Download',
+          () => Utils.download(Uneek.small_export(w), `${filename}.csv`),
+          s.classed('btn btn-customii')),
+        Uneek.flat(w).map(({a, b, occurrences}) =>
+          tag('.rows',
+            tag('span.w20.r', a > 0 && a),
+            tag('span.w60.c', occurrences, a > 0 && b > 0 && tag('span.small', ` (${a + b})`)),
+            tag('span.w20.l', b > 0 && b))))
 
     const input =
       (name: 'a' | 'b') =>
@@ -366,6 +368,7 @@ export const App = (store: Store<State>) => {
       )
 
     return tag('.rows.w100.h100.container.col-md-4.marginalized.some-height',
+      s.key('main'),
       input('a'),
       tag('.w60.cols.h100',
         (store.at('xml_input').get() &&
@@ -375,15 +378,21 @@ export const App = (store: Store<State>) => {
           keys.map(
             k =>
               s.button(
+                () => store.at('key').set(k),
+                k,
+                s.attrs({disabled: k === state.key})))),
+        (state.key == '') ?
                 k, // label
-                () => store.at('key').set(k), // atClick
-                s.attrs({disabled: k === state.key}))))),
+                () => store.at('key').set(k), //atclick
+                s.attrs({disabled: k === state.key})))),
         ((state.key == '') || (!state.show_uniqueness && !state.show_intersection)) ?
         tag('.h100.thumbnail.centered.vcentered.rows', centered_logo) :
+
         tag('.rows.h100.marginalized.some-height.padding-b7',
-          state.show_uniqueness && count(only((a, b) => b == 0)),
-          state.show_intersection && count(only((a, b) => a > 0 && b > 0)),
-          state.show_uniqueness && count(only((a, b) => a == 0)),
+          state.show_uniqueness && count(only((a, b) => b == 0), 'a-only'),
+          state.show_intersection && count(only((a, b) => a > 0 && b > 0), 'intersection'),
+          state.show_uniqueness && count(only((a, b) => a == 0), 'b-only'),
+
         )),
       input('b'))
   }
