@@ -1,7 +1,7 @@
 import * as Uneek from './Uneek'
 import * as Utils from './Utils'
 
-import { checked } from './Utils'
+import { checked, attr } from './Utils'
 
 import { VNode } from "snabbdom/vnode"
 import { attachTo } from "snabbdom/helpers/attachto"
@@ -220,7 +220,13 @@ export const App = (store: Store<State>) => {
           </div>
           <div>
             <hr>
-  <center> <button type="button" class="btn btn-customi">Download Results</button>
+  <center>
+    <button type="button" class="btn btn-customi"
+      ${attr('onclick', () => {
+        const {A, B} = currently()
+        Utils.download(Uneek.full_export(A, B), 'results.csv')
+      })}
+    >Download Results</button>
   <button type="button" class="btn btn-customii ">Clear All Fields</button> </center>
 <p></p>
         </div>
@@ -275,7 +281,7 @@ export const App = (store: Store<State>) => {
   </footer>
     `
 
-  function main() {
+  function currently() {
     const state = store.get()
     const a = store.at('a')
     const b = store.at('b')
@@ -299,6 +305,12 @@ export const App = (store: Store<State>) => {
         return {}
       }
     })
+    return {result, A, B, errs, keys}
+  }
+
+  function main() {
+    const state = store.get()
+    const {result, errs, keys} = currently()
 
     const only =
       (p: (a: number, b: number) => boolean) =>
