@@ -307,13 +307,11 @@ export const App = (store: Store<State>) => {
     const count =
       (w: Uneek.VectorPair) =>
       tag('.whitebox.equal-width.scroll',
-        Utils.record_traverse(w, ({a, b}, k) => ({a, b, k}))
-          .sort((l, r) => (r.a + r.b) - (l.a + l.b))
-          .map(({a, b, k}) =>
-            tag('.rows',
-              tag('span.w20.r', a > 0 && a),
-              tag('span.w60.c', k, a > 0 && b > 0 && tag('span.small', ` (${a + b})`)),
-              tag('span.w20.l', b > 0 && b))))
+        Uneek.flat(w).map(({a, b, occurrences}) =>
+          tag('.rows',
+            tag('span.w20.r', a > 0 && a),
+            tag('span.w60.c', occurrences, a > 0 && b > 0 && tag('span.small', ` (${a + b})`)),
+            tag('span.w20.l', b > 0 && b))))
 
     const input =
       (name: 'a' | 'b') =>

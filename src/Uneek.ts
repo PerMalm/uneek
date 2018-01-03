@@ -78,3 +78,28 @@ export function FromXML(d: Document | string): Text {
   return r
 }
 
+export const flat = (v: VectorPair) =>
+  Utils.record_traverse(v, ({a, b}, occurrences) => ({a, b, occurrences}))
+    .sort((l, r) => (r.a + r.b) - (l.a + l.b))
+
+export const full = (a: Text, b: Text) =>
+  Utils.flatten(
+    Utils.keysof(a, b)
+      .sort()
+      .map(key =>
+        flat(VectorPair(a[key] || {}, b[key] || {}))
+          .map(v => ({key, ...v}))))
+
+export type Table = string[][]
+
+export function table<K extends string>(rs: Record<K, number | string>[], order: K[]): Table {
+  return [order as string[]].concat(rs.map(r => order.map((k: K) => r[k] + '')))
+}
+
+export const csv = (xss: string[][]) => xss.map(xs => xs.join(',')).join('\n')
+
+export const full_export = (a: Text, b: Text) =>
+  csv(table(full(a, b), ['key', 'occurrences', 'a', 'b']))
+
+export const small_export = (v: VectorPair) =>
+  csv(table(flat(v), ['occurrences', 'a', 'b']))

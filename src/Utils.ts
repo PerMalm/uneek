@@ -126,3 +126,6 @@ export function html(data_name='snabbis-unique') {
   }
 }
 
+export function flatten<A>(xs: A[][]): A[] {
+  return ([] as A[]).concat(...xs)
+}
