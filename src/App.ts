@@ -33,6 +33,7 @@ export interface State {
   readonly key: string | ''
   readonly show_intersection: boolean
   readonly show_uniqueness: boolean
+  readonly show_syntax: boolean
   readonly location: string
   readonly xml_input: boolean
 }
@@ -43,6 +44,7 @@ export const init: State = {
   key: '',
   show_intersection: true,
   show_uniqueness: true,
+  show_syntax: false,
   location: '',
   xml_input: true,
 }
@@ -186,8 +188,9 @@ export const App = (store: Store<State>) => {
             <hr>
             <h4>Syntactic Analysis</h4>
             <label class="checkbox-inline">
-            <input type="checkbox" value="">
-            shallow</label>
+              <input type="checkbox" value="" ${checked(store.at('show_syntax'))}>
+                shallow
+            </label>
          <!--   <label class="checkbox-inline">
             <input type="checkbox" value="">
             deep</label> -->
@@ -390,7 +393,7 @@ export const App = (store: Store<State>) => {
         tag('.rows.centered.marginalized',
           // force automatically listed attribute buttons to stay within margins
           s.style({display:'inline-block','text-align':'center'}),
-          keys.map(
+          keys.filter(k => store.at('show_syntax').get() || !k.startsWith('syn.shallow.')).map(
             k =>
               s.button(
                 k,

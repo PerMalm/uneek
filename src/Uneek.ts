@@ -55,12 +55,26 @@ export function FromXML(d: Document | string): Text {
   if (typeof d == 'string') {
     d = ParseXML(d)
   }
-  const w = d.createTreeWalker(d)
   const r = {} as Text
   const bump = (k: string, t: string) => {
-    r[k] = r[k] || {}
+    r[k] = r[k] || {} as Text
     r[k][t] = Utils.succ(r[k][t])
   }
+
+  const bump2= (struct: Record<string, Array<string>>, k: string, t: string) => {
+    struct[k] = struct[k] || []
+    struct[k].push(t)
+  }
+
+  const sentenceparser = (s: Element) => {
+    const struct : Record<string, Array<string>> = {}
+    Array.from(s.getElementsByTagName('w')).map(w => Array.from(w.attributes).map(x => bump2(struct, x.nodeName, x.value)))
+    Object.keys(struct).map(key => bump('syn.shallow'+'.'+key, struct[key].join('-')))
+  }
+
+  Array.from(d.getElementsByTagName('sentence')).map(s => sentenceparser(s))
+
+  const w = d.createTreeWalker(d)
   while (w.nextNode()) {
     const node = w.currentNode
     if (node.nodeType == 1) {
@@ -77,6 +91,7 @@ export function FromXML(d: Document | string): Text {
   }
   return r
 }
+
 
 export const flat = (v: VectorPair) =>
   Utils.record_traverse(v, ({a, b}, occurrences) => ({a, b, occurrences}))
