@@ -395,14 +395,14 @@ export const App = (store: Store<State>) => {
               s.button(
                 k,
                 () => store.at('key').set(k),
-                s.attrs({disabled: k === state.key})))),
+                s.attrs({disabled: k === state.key}))))),
         ((state.key == '') || (!state.show_uniqueness && !state.show_intersection)) ?
         tag('.h100.thumbnail.centered.vcentered.rows', centered_logo) :
         tag('.rows.h100.marginalized.some-height.padding-b7',
           state.show_uniqueness && count(only((a, b) => b == 0), 'a-only'),
           state.show_intersection && count(only((a, b) => a > 0 && b > 0), 'intersection'),
           state.show_uniqueness && count(only((a, b) => a == 0), 'b-only'),
-        ))),
+        )),
       input('b'))
   }
 
