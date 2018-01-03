@@ -1,7 +1,7 @@
 import * as Uneek from './Uneek'
 import * as Utils from './Utils'
 
-import { checked } from './Utils'
+import { checked, attr } from './Utils'
 
 import { VNode } from "snabbdom/vnode"
 import { attachTo } from "snabbdom/helpers/attachto"
@@ -228,7 +228,12 @@ export const App = (store: Store<State>) => {
           <div>
             <hr>
               <center>
-                <button type="button" class="btn btn-customi">Download Results</button>
+                <button type="button" class="btn btn-customi"
+                  ${attr('onclick', () => {
+                    const {A, B} = currently()
+                    Utils.download(Uneek.full_export(A, B), 'results.csv')
+                  })}
+                >Download Results</button>
                 <button type="button" class="btn btn-customii">Clear All Fields</button>
               </center>
 <p></p>
@@ -284,7 +289,7 @@ export const App = (store: Store<State>) => {
   </footer>
     `
 
-  function main() {
+  function currently() {
     const state = store.get()
     const a = store.at('a')
     const b = store.at('b')
@@ -308,6 +313,12 @@ export const App = (store: Store<State>) => {
         return {}
       }
     })
+    return {result, A, B, errs, keys}
+  }
+
+  function main() {
+    const state = store.get()
+    const {result, errs, keys} = currently()
 
     const only =
       (p: (a: number, b: number) => boolean) =>
@@ -378,21 +389,15 @@ export const App = (store: Store<State>) => {
           keys.map(
             k =>
               s.button(
-                () => store.at('key').set(k),
                 k,
-                s.attrs({disabled: k === state.key})))),
-        (state.key == '') ?
-                k, // label
-                () => store.at('key').set(k), //atclick
-                s.attrs({disabled: k === state.key})))),
+                () => store.at('key').set(k),
+                s.attrs({disabled: k === state.key}))))),
         ((state.key == '') || (!state.show_uniqueness && !state.show_intersection)) ?
         tag('.h100.thumbnail.centered.vcentered.rows', centered_logo) :
-
         tag('.rows.h100.marginalized.some-height.padding-b7',
           state.show_uniqueness && count(only((a, b) => b == 0), 'a-only'),
           state.show_intersection && count(only((a, b) => a > 0 && b > 0), 'intersection'),
           state.show_uniqueness && count(only((a, b) => a == 0), 'b-only'),
-
         )),
       input('b'))
   }

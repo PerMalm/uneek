@@ -77,40 +77,52 @@ import { Store } from "reactive-lens"
 import { tag, s } from "snabbis"
 
 export interface StoreSplice {
-  selector: string,
+  kind: 'StoreSplice'
+  selector: string
   store: Store<any>
 }
 
-export const checked = (store: Store<boolean>): StoreSplice => ({selector: 'checked', store})
-export const value = (store: Store<string>): StoreSplice => ({selector: 'value', store})
+export interface AttrSplice {
+  kind: 'AttrSplice'
+  attr: string
+  value: any
+}
+
+export const checked = (store: Store<boolean>): StoreSplice => ({kind: 'StoreSplice', selector: 'checked', store})
+export const value = (store: Store<string>): StoreSplice => ({kind: 'StoreSplice', selector: 'value', store})
+export const attr = (attr: string, value: any): AttrSplice => ({kind: 'AttrSplice', attr, value})
 
 export function html(data_name='snabbis-unique') {
   let next_unique = 0
-  return function (snippets: TemplateStringsArray, ...syncs: (StoreSplice | string)[]): VNode {
+  return function (snippets: TemplateStringsArray, ...syncs: (StoreSplice | AttrSplice | string)[]): VNode {
     let innerHTML = ''
     const cbs = [] as ((elm: Element) => void)[]
-    syncs.forEach((sync: StoreSplice | string, i) => {
+    syncs.forEach((sync: StoreSplice | AttrSplice | string, i) => {
       if (typeof sync == 'string') {
         innerHTML += snippets[i]
         innerHTML += sync
       } else {
-        const id = '' + ++next_unique
-        const {store, selector} = sync
-        innerHTML += snippets[i]
-        innerHTML += ` data-${data_name}='${id}' `
+        const data_selector = `data-${data_name}-${++next_unique}='yes'`
+        innerHTML += snippets[i] + ' ' + data_selector + ' '
         cbs.push((elm: Element) => window.requestAnimationFrame(() => {
-          const elms = Array.from(elm.querySelectorAll(`[data-${data_name}='${id}']`))
+          const elms = Array.from(elm.querySelectorAll(`[${data_selector}]`))
           elms.forEach((e: HTMLInputElement) => {
-            if ((e as any)[selector] != store.get()) {
-              (e as any)[selector] = store.get()
+            if (sync.kind == 'StoreSplice') {
+              const {store, selector} = sync
+              if ((e as any)[selector] != store.get()) {
+                (e as any)[selector] = store.get()
+              }
+              store.ondiff((z: any, a: any) => z !== a && ((e as any)[selector] = z))
+              e.onchange = () => store.set((e as any)[selector])
+              e.oninput = () => store.set((e as any)[selector])
+            } else {
+              const {attr, value} = sync
+              ; (e as any)[attr] = value
             }
-            store.ondiff((z: any, a: any) => z !== a && ((e as any)[selector] = z))
-            e.onchange = () => store.set((e as any)[selector])
-            e.oninput = () => store.set((e as any)[selector])
+            if (elms.length == 0) {
+              console.error(`No elements found: ${data_selector} ${sync}`)
+            }
           })
-          if (elms.length == 0) {
-            console.error(`No elements found: ${id}`)
-          }
         }))
       }
     })
