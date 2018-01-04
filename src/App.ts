@@ -10,8 +10,10 @@ import { tags, tag, s, TagData } from "snabbis"
 
 const {div, span, h1} = tags
 
-const logo = require('./images/uneekLogo.svg')
+const logo = require('./images/nerlog.svg')
 const center = require('./images/uneekCenter.svg')
+const logotop = require('./images/slimlog.svg')
+
 
 // dokumentation: tag(tagnamn.klass.klass..., attribut, namn)
 
@@ -109,7 +111,7 @@ export const App = (store: Store<State>) => {
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="#">
-          <img alt="Logga" src="${logo}" height='64px'>
+          <img alt="Logga" src="${logotop}" height='21px'>
         </a>
       </div>
 
@@ -207,7 +209,7 @@ export const App = (store: Store<State>) => {
           <li>This web-tool is under development; so are the methods and thoughts revolving around it. See the <a href="#">News</a> section for relevant updates. </li>
           <li>See the <a href="#">Documentation</a> for how to use the tool, for methods, and for technical information.</li>
           <li>Please send suggestions, bug reports etc. to <a href="mailto:per.malm@nordiska.uu.se?subject=Sent%20from%20Uneek%20site:">my email</a>.</li>
-          <li> Check out <a href="#">Useful links</a> for some, well, useful stuff, such as parsers, concordance tools, etc.</li>
+          <li> Check out the <a href="#">Useful links</a> for some, well, useful stuff, such as parsers, concordance tools, etc.</li>
           <li> Processing large files may take some time; be patient.</li>
 
         </ul>
@@ -256,11 +258,15 @@ export const App = (store: Store<State>) => {
     <div class="inner-footer">
       <div class="container">
         <div class="row">
-          <div class="col-md-4 l-posts">
-            <img alt="Logga" src="${center}" height='64px'>
+          <div class="col-md-4 l-posts" align="left">
+			  
+              <right>
+			  
+          <h3 class="link"> <img alt="Logga" src="${logo}" height='100px'></h3>
+			  </right>
 
           </div>
-          <div class="col-md-4 f-about">
+          <div class="col-md-4 f-about" align="center">
             <h3 class="link">Remember</h3>
 
                 <p> You shall know the difference between two polysemous words by the company one of them constantly rejects.
@@ -269,7 +275,7 @@ export const App = (store: Store<State>) => {
           <div class="col-md-4 l-posts">
 
           </div>
-          <div class="col-md-4 f-contact">
+          <div class="col-md-4 f-contact" align="right">
             <h3 class="link">Contact</h3>
             <a href="#">
               <p><i class="fa fa-envelope"></i> <span class="glyphicon glyphicon-envelope"></span> <a href="mailto:per.malm@nordiska.uu.se?subject=Sent%20from%20Uneek%20site:">Per Malm</a></p>
@@ -283,7 +289,7 @@ export const App = (store: Store<State>) => {
     <div class="last-div">
       <div class="container">
         <div class="row">
-  <div class="copyright">© 2018 Per Malm | <a target="_blank" rel="nofollow" href="https://opensource.org/licenses/MIT">MIT-license</a></div>
+  <div class="copyright" align="center">© 2018 Per Malm | <a target="_blank" rel="nofollow" href="https://opensource.org/licenses/MIT">MIT-license</a></div>
           </div>
         </div>
       </div>
@@ -333,16 +339,23 @@ export const App = (store: Store<State>) => {
 
     const count =
       (w: Uneek.VectorPair, filename: string) =>
-      tag('.whitebox.equal-width.scroll',
-        s.button(
-          'Download',
-          () => Utils.download(Uneek.small_export(w), `${filename}.csv`),
-          s.classed('btn btn-customii')),
+	  
+      tag('.w20.thumbnail.equal-width',
+        tag('.cols.h100.centered.vcentered',
+          tag('caption', tag('h3', /*'Field' + name.toUpperCase()*/)),
+      tag('.whitebox.whcustom.scroll',      
         Uneek.flat(w).map(({a, b, occurrences}) =>
           tag('.rows',
             tag('span.w20.r', a > 0 && a),
             tag('span.w60.c', occurrences, a > 0 && b > 0 && tag('span.small', ` (${a + b})`)),
-            tag('span.w20.l', b > 0 && b))))
+            tag('span.w20.l', b > 0 && b))),
+	     
+			)
+	        s.button(
+	          'Download',
+	          () => Utils.download(Uneek.small_export(w), `${filename}.csv`),
+	          s.classed('btn btn-customi'))
+			))
 
     const input =
       (name: 'a' | 'b') =>

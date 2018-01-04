@@ -3,6 +3,28 @@ html, body {
     padding: 0;
     height: 100%;
 }
+	
+
+.minheight90 {
+	min-height: 88%;
+ 
+}
+
+
+
+
+.whcustom {
+	width: 90%;
+	height: 70%;
+	
+} 
+
+div.h100.thumbnail.centered.vcentered.rows {
+	
+	background: #ff7000;
+	
+}
+
 
 body {
     font-size: 16px;
@@ -81,7 +103,7 @@ textarea {
 }
 
 .btn-customi {
-  background: #fb7304;
+  background: #ff7000;
 }
 
 .btn-customii {
@@ -102,10 +124,10 @@ textarea {
 
 
 a {
-color: #c45f0d;
+color: #ff7000;
 }
 a:link {
-color: #fb7304;
+color: #ff7000;
 }
 a:hover {
 color: white;
@@ -139,7 +161,7 @@ color: white;
 .w33 { width: 33%; }
 
 .orange {
-    background: #fb7304;
+    background: #ff7000;
 }
 
 .textarea {
@@ -157,9 +179,14 @@ color: white;
 }
 
 .error {
-    background: red;
-    color: white;
+	color: #D8000C;
+	background-color: #FFBABA;    
     font-weight: 800;
+	border-radius:.5em;
+	border: 4px solid;
+    padding: 4px 12px;	
+	box-shadow:1px 1px 3px #888;
+	
 }
 
 .r {
