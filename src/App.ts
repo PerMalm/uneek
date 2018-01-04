@@ -338,19 +338,18 @@ export const App = (store: Store<State>) => {
       Utils.record_filter(result, ({a, b}) => p(a,b))
 
     const count =
-      (w: Uneek.VectorPair, filename: string) =>
-	  
+      (name: string, w: Uneek.VectorPair, filename: string) =>
+
       tag('.w20.thumbnail.equal-width',
         tag('.cols.h100.centered.vcentered',
-          tag('caption', tag('h3', /*'Field' + name.toUpperCase()*/)),
-      tag('.whitebox.whcustom.scroll',      
+          tag('caption', tag('h3', name)),
+      tag('.whitebox.whcustom.scroll',
         Uneek.flat(w).map(({a, b, occurrences}) =>
           tag('.rows',
             tag('span.w20.r', a > 0 && a),
             tag('span.w60.c', occurrences, a > 0 && b > 0 && tag('span.small', ` (${a + b})`)),
             tag('span.w20.l', b > 0 && b))),
-	     
-			)
+			),
 	        s.button(
 	          'Download',
 	          () => Utils.download(Uneek.small_export(w), `${filename}.csv`),
@@ -415,9 +414,9 @@ export const App = (store: Store<State>) => {
         ((state.key == '') || (!state.show_uniqueness && !state.show_intersection)) ?
         tag('.h100.thumbnail.centered.vcentered.rows', centered_logo) :
         tag('.rows.h100.marginalized.some-height.padding-b7',
-          state.show_uniqueness && count(only((a, b) => b == 0), 'a-only'),
-          state.show_intersection && count(only((a, b) => a > 0 && b > 0), 'intersection'),
-          state.show_uniqueness && count(only((a, b) => a == 0), 'b-only'),
+          state.show_uniqueness && count('A-B', only((a, b) => b == 0), 'a-only'),
+          state.show_intersection && count('A & B', only((a, b) => a > 0 && b > 0), 'intersection'),
+          state.show_uniqueness && count('B-A', only((a, b) => a == 0), 'b-only'),
         )),
       input('b'))
   }
