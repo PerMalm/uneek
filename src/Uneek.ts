@@ -68,7 +68,7 @@ export function FromXML(d: Document | string): Text {
 
   const sentenceparser = (s: Element) => {
     const struct : Record<string, Array<string>> = {}
-    Array.from(s.getElementsByTagName('w')).map(w => Array.from(w.attributes).map(x => bump2(struct, x.nodeName, x.value)))
+    Array.from(s.getElementsByTagName('*')).map(w => Array.from(w.attributes).map(x => bump2(struct, x.nodeName, x.value)))
     Object.keys(struct).map(key => bump('syn.shallow'+'.'+key, struct[key].join('-')))
   }
 

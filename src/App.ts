@@ -111,7 +111,7 @@ export const App = (store: Store<State>) => {
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="#">
-          <img alt="Logga" src="${logotop}" height='21px'>
+          <img alt="Logga" src="${logotop}" height='30px'>
         </a>
       </div>
 
@@ -415,7 +415,7 @@ export const App = (store: Store<State>) => {
         tag('.h100.thumbnail.centered.vcentered.rows', centered_logo) :
         tag('.rows.h100.marginalized.some-height.padding-b7',
           state.show_uniqueness && count('A-B', only((a, b) => b == 0), 'a-only'),
-          state.show_intersection && count('A & B', only((a, b) => a > 0 && b > 0), 'intersection'),
+          state.show_intersection && count('A ∩ B', only((a, b) => a > 0 && b > 0), 'intersection'),
           state.show_uniqueness && count('B-A', only((a, b) => a == 0), 'b-only'),
         )),
       input('b'))
