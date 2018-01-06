@@ -1,0 +1,7 @@
+The website Uneek is an open source project, and the
+code\footnote{https://github.com/PerMalm/uneek} is available under MIT.
+The tool handles xml and text input. When given raw text, a simple whitespace
+tokenizer is run. When working with xml, all text nodes are considered as well
+as all attributes of all tags. The only assumption made is for the shallow
+syntax function, where the xml tag \verb|sentence| is considered to give
+the span wherein the syntax chains are constructed.
