@@ -413,7 +413,7 @@ export const App = (store: Store<State>) => {
                 s.attrs({disabled: k === state.key}))))),
         ((state.key == '') || (!state.show_uniqueness && !state.show_intersection)) ?
         tag('.h100.thumbnail.centered.vcentered.rows', centered_logo) :
-        tag('.rows.h100.marginalized.some-height.padding-b7',
+        tag('.rows.h100.marginalized',
           state.show_uniqueness && count('A-B', only((a, b) => b == 0), 'a-only'),
           state.show_intersection && count('A ∩ B', only((a, b) => a > 0 && b > 0), 'intersection'),
           state.show_uniqueness && count('B-A', only((a, b) => a == 0), 'b-only'),

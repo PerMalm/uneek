@@ -213,6 +213,9 @@ color: white;
     min-height: 600px;
 }
 
+.someother-height {
+    min-height: 300px;
+}
 .equal-width {
     flex-grow: 1;
     flex-basis: 0;
