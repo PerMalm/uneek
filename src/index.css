@@ -3,26 +3,25 @@ html, body {
     padding: 0;
     height: 100%;
 }
-	
+
 
 .minheight90 {
-	min-height: 88%;
- 
+    min-height: 88%;
+
 }
 
 
 
 
 .whcustom {
-	width: 90%;
-	height: 70%;
-	
-} 
+    max-height: 600px;
+    height: 100%;
+}
 
 div.h100.thumbnail.centered.vcentered.rows {
-	
-	background: #ff7000;
-	
+
+    background: #ff7000;
+
 }
 
 
@@ -67,29 +66,29 @@ footer {
 
 
 .whitebox {
-	
+
     border: 4px solid black;
     border-radius: 10px;
     padding: 5px 11px;
 }
 
 textarea {
-	
+
     border: 4px solid black;
     border-radius: 10px;
     padding: 5px 11px;
-	
+
 
 }
 
 
 
-   
+
 .thumbnail {
-	
+
     border: 4px solid black;
     border-radius: 10px;
-	
+
 }
 .btn-customi, .btn-customii {
   border: 4px solid black;
@@ -134,11 +133,11 @@ color: white;
 }
 
 
-.rows {
+.cols {
     display: flex;
 }
 
-.cols {
+.rows {
     display: flex;
     flex-direction: column;
 }
@@ -179,14 +178,14 @@ color: white;
 }
 
 .error {
-	color: #D8000C;
-	background-color: #FFBABA;    
+    color: #D8000C;
+    background-color: #FFBABA;
     font-weight: 800;
-	border-radius:.5em;
-	border: 4px solid;
-    padding: 4px 12px;	
-	box-shadow:1px 1px 3px #888;
-	
+    border-radius:.5em;
+    border: 4px solid;
+    padding: 4px 12px;
+    box-shadow:1px 1px 3px #888;
+
 }
 
 .r {
@@ -206,11 +205,15 @@ color: white;
 }
 
 .scroll {
-    overflow: scroll;
+    overflow: auto;
+}
+
+.hidden-overflow {
+    overflow: hidden;
 }
 
 .some-height {
-    min-height: 600px;
+    height: 600px;
 }
 
 .someother-height {

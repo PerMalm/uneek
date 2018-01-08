@@ -1,35 +1,65 @@
 To do lista:
 
-	X Fixa attribut listan ovanför resultatlådorna så att de lägger sig på en ny rad när de blir för många. De bör förhålla sig till radikalerna resultatlåda vänsters vänsterkant och resultatlåda högers högerkant. 
-	X Fixa bildimport. (vi kör det på någon annan dator). 
-	X Fixa så att man kan skriva in uppdateringar på sidan ’News’: nya poster (som en blog). Fixa så att man kan lägga in länkar på sidan ’Useful links’.
-	X För check box i Setting: När lådan icke är okryssad, så ser man inte resultatet; vid ikryssad ska man se den. 
+    X Fixa attribut listan ovanför resultatlådorna så att de lägger sig
+    på en ny rad när de blir för många. De bör förhålla sig till
+    radikalerna resultatlåda vänsters vänsterkant och resultatlåda
+    högers högerkant.
 
-	* Koppla knappen I ’Download Results’ så att man kan spara resultatet i önskad mapp på datorn.
-             Gärna så att varje analys landar i en separat fil, döpt efter analysnamn, t.ex. ’Intersectional analysis’.
-        ? Koppla även knappen ’Clear all’ så att den rensar alla fält samt checkboxar. 
-	* Lägg till syntax (endast shallow, ej deep). Se nedan
-	* Fixa en ’’arbetar’’-symbol: typ ’glyphicon glyphicon-hourglass’ (svårt)
-	* Fixa så att undermarginalen i resultatlådorna matchar undermarginalen med inputlådorna. 
+    X Fixa bildimport. (vi kör det på någon annan dator).
 
-	? Matcha marginalen i de tre lådorna under unikhetslådorna med varandra. 
-        X Extra div
-	X Koppla format knapparna något som gör att de läser filerna enligt det som står i checkbox. (Per! Ändra dem till någon radio button)
-	X Koppla knapparna i ’File A’ och ’File B’. ’Upload’ öppnar upp så att man kan välja en fil i datorn. ’Clear rensar fältet i ’File A’ och ’B’
-	X Koppla hyperlänkar. 
+    X Fixa så att man kan skriva in uppdateringar på sidan ’News’:
+    nya poster (som en blog). Fixa så att man kan lägga in länkar
+    på sidan ’Useful links’.
+
+    X För check box i Setting: När lådan icke är okryssad, så ser
+    man inte resultatet; vid ikryssad ska man se den.
 
 
-Pythonkod för att lägga till "syntax". Detta bör ske när man trycker på 'syntactic analysis - shallow'
-xml:en utökas då med fält enligt nedan:
+
+    * Koppla knappen I ’Download Results’ så att man kan spara
+    resultatet i önskad mapp på datorn.
+
+         Gärna så att varje analys landar i en separat fil, döpt
+         efter analysnamn, t.ex. ’Intersectional analysis’.
+
+    ? Koppla även knappen ’Clear all’ så att den rensar alla fält
+    samt checkboxar.
+
+    * Lägg till syntax (endast shallow, ej deep). Se nedan
+
+    * Fixa en ’’arbetar’’-symbol: typ ’glyphicon
+    glyphicon-hourglass’ (svårt)
+
+    * Fixa så att undermarginalen i resultatlådorna matchar
+    undermarginalen med inputlådorna.
+
+
+
+    ? Matcha marginalen i de tre lådorna under unikhetslådorna med
+    varandra.
+
+    X Extra div
+
+    X Koppla format knapparna något som gör att de läser filerna enligt
+    det som står i checkbox. (Per! Ändra dem till någon radio button)
+
+    X Koppla knapparna i ’File A’ och ’File B’. ’Upload’
+    öppnar upp så att man kan välja en fil i datorn. ’Clear rensar
+    fältet i ’File A’ och ’B’
+
+    X Koppla hyperlänkar.
+
+
+
+Pythonkod för att lägga till "syntax". Detta bör ske när man trycker på
+'syntactic analysis - shallow' xml:en utökas då med fält enligt nedan:
 def getstructure(data):
-    root = etree.fromstring(data)
-    for sentence in root.findall('.//sentence'):
-        structure = {}
-        for w in sentence.findall('w'):
-            for attrib in w.attrib.keys():
-                structure[attrib].append(w.attrib.get(attrib))
-        for key, struct in sturcture.items():
-            sroot.set('structure'+key, ','.join(structure[key]))
+    root = etree.fromstring(data) for sentence in root.findall('.//sentence'):
+    structure = {} for w in sentence.findall('w'):
+        for attrib in w.attrib.keys():
+        structure[attrib].append(w.attrib.get(attrib))
+    for key, struct in sturcture.items():
+        sroot.set('structure'+key, ','.join(structure[key]))
     return root
 
 

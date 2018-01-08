@@ -94,7 +94,7 @@ export function FromXML(d: Document | string): Text {
 
 
 export const flat = (v: VectorPair) =>
-  Utils.record_traverse(v, ({a, b}, occurrences) => ({a, b, occurrences}))
+  Utils.record_traverse(v, ({a, b}, word) => ({a, b, word}))
     .sort((l, r) => (r.a + r.b) - (l.a + l.b))
 
 export const full = (a: Text, b: Text) =>
@@ -116,7 +116,7 @@ const CSV = require('comma-separated-values')
 export const csv = (xss: (string | number)[][]) => (new CSV(xss)).encode()
 
 export const full_export = (a: Text, b: Text) =>
-  csv(table(full(a, b), ['key', 'occurrences', 'a', 'b']))
+  csv(table(full(a, b), ['key', 'word', 'a', 'b']))
 
 export const small_export = (v: VectorPair) =>
-  csv(table(flat(v), ['occurrences', 'a', 'b']))
+  csv(table(flat(v), ['word', 'a', 'b']))
