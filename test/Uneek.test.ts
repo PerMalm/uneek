@@ -1,8 +1,7 @@
 import * as Uneek from '../src/Uneek'
 import * as test from 'tape'
-import { JSDOM } from 'jsdom'
-
-; (global as any)['DOMParser'] = new JSDOM(``).window.DOMParser
+import {JSDOM} from 'jsdom'
+;(global as any)['DOMParser'] = new JSDOM(``).window.DOMParser
 
 export const A = {
   word: {
@@ -12,7 +11,7 @@ export const A = {
   pos: {
     DT: 2,
     PN: 1,
-  }
+  },
 }
 
 export const B = {
@@ -23,52 +22,46 @@ export const B = {
   pos: {
     DT: 2,
     PP: 1,
-  }
+  },
 }
 
 test('Unique', assert => {
-  assert.deepEqual(
-    Uneek.Unique(A.word, B.word), {
-      apa: true,
-      bepa: false,
-      cepa: false,
-    })
-  assert.deepEqual(
-    Uneek.Unique(B.word, A.word), {
-      apa: false,
-      cepa: true,
-      bepa: false
-    })
-  assert.deepEqual(
-    Uneek.Compare(A.word, B.word), {
-      apa: 'A',
-      bepa: 'Both',
-      cepa: 'B'
-    })
+  assert.deepEqual(Uneek.Unique(A.word, B.word), {
+    apa: true,
+    bepa: false,
+    cepa: false,
+  })
+  assert.deepEqual(Uneek.Unique(B.word, A.word), {
+    apa: false,
+    cepa: true,
+    bepa: false,
+  })
+  assert.deepEqual(Uneek.Compare(A.word, B.word), {
+    apa: 'A',
+    bepa: 'Both',
+    cepa: 'B',
+  })
   assert.end()
 })
 
 test('Vectorize', assert => {
   const A = Uneek.Vectorize('apa bepa bepa')
   const B = Uneek.Vectorize('bepa cepa bepa')
-  assert.deepEqual(
-    Uneek.Unique(A, B), {
-      apa: true,
-      bepa: false,
-      cepa: false,
-    })
-  assert.deepEqual(
-    Uneek.Unique(B, A), {
-      apa: false,
-      cepa: true,
-      bepa: false
-    })
-  assert.deepEqual(
-    Uneek.Compare(A, B), {
-      apa: 'A',
-      bepa: 'Both',
-      cepa: 'B'
-    })
+  assert.deepEqual(Uneek.Unique(A, B), {
+    apa: true,
+    bepa: false,
+    cepa: false,
+  })
+  assert.deepEqual(Uneek.Unique(B, A), {
+    apa: false,
+    cepa: true,
+    bepa: false,
+  })
+  assert.deepEqual(Uneek.Compare(A, B), {
+    apa: 'A',
+    bepa: 'Both',
+    cepa: 'B',
+  })
   assert.end()
 })
 
@@ -85,23 +78,17 @@ test('XML', assert => {
       <w pos="NN">liter filmjölk</w>
     </root>
   `)
-  assert.deepEqual(
-    Uneek.VectorPair(A['w'], B['w']),
-    {
-      'En': {a: 1, b: 1},
-      'båt': {a: 1, b: 0},
-      'liter': {a: 0, b: 1},
-      'filmjölk': {a: 0, b: 1},
-    }
-  )
-  assert.deepEqual(
-    Uneek.VectorPair(A['w.pos'], B['w.pos']),
-    {
-      'DT': {a: 1, b: 0},
-      'D': {a: 0, b: 1},
-      'NN': {a: 1, b: 1},
-    }
-  )
+  assert.deepEqual(Uneek.VectorPair(A['w'], B['w']), {
+    En: {a: 1, b: 1},
+    båt: {a: 1, b: 0},
+    liter: {a: 0, b: 1},
+    filmjölk: {a: 0, b: 1},
+  })
+  assert.deepEqual(Uneek.VectorPair(A['w.pos'], B['w.pos']), {
+    DT: {a: 1, b: 0},
+    D: {a: 0, b: 1},
+    NN: {a: 1, b: 1},
+  })
   assert.end()
 })
 
@@ -128,7 +115,7 @@ test('export', assert => {
       '"w","filmjölk","0","1"',
       '"w.pos","NN","1","1"',
       '"w.pos","DT","1","0"',
-      '"w.pos","D","0","1"'
+      '"w.pos","D","0","1"',
     ].join('\r\n')
   )
   assert.deepEqual(
@@ -143,12 +130,7 @@ test('export', assert => {
   )
   assert.deepEqual(
     Uneek.small_export(Uneek.VectorPair(A['w.pos'], B['w.pos'])),
-    [
-      '"word","a","b"',
-      '"NN","1","1"',
-      '"DT","1","0"',
-      '"D","0","1"'
-    ].join('\r\n')
+    ['"word","a","b"', '"NN","1","1"', '"DT","1","0"', '"D","0","1"'].join('\r\n')
   )
   assert.end()
 })

@@ -5,9 +5,16 @@
         "allowUnreachableCode": true,
         "target": "es6",
         "jsx": "react",
-        "noEmitOnError": true
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "noEmitOnError": true,
+        "outDir": "./dist"
     },
     "parcelTsPluginOptions": {
         "transpileOnly": false
-    }
+    },
+    "include": [
+        "src",
+        "test"
+    ]
 }

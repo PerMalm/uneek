@@ -1,96 +1,74 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
 }
-
 
 .minheight90 {
-    min-height: 88%;
-
+  min-height: 88%;
 }
 
-
-
-
 .whcustom {
-    max-height: 600px;
-    height: 100%;
+  max-height: 600px;
+  height: 100%;
 }
 
 div.h100.thumbnail.centered.vcentered.rows {
-
-    background: #ff7000;
-
+  background: #ff7000;
 }
 
-
 body {
-    font-size: 16px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    line-height: 1.4em;
-    background: #393838;
-    color: #777575;
-    font-weight: 500;
+  font-size: 16px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.4em;
+  background: #393838;
+  color: #777575;
+  font-weight: 500;
 }
 
 h1 {
-
   font-size: 16px;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   line-height: 1.4em;
   background: #393838;
   color: #4d4d4d;
   font-weight: 500;
-
-
 }
-
 
 footer {
-
-    font-size: 16px;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    line-height: 1.4em;
-    background: linear-gradient(#2F2F2F, black);
-    color: #B8BABB;
-    font-weight: 500;
-
+  font-size: 16px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.4em;
+  background: linear-gradient(#2f2f2f, black);
+  color: #b8babb;
+  font-weight: 500;
 }
 
-.panel {    border: 4px solid black;
-    border-radius: 10px;
-    padding: 5px 11px;
+.panel {
+  border: 4px solid black;
+  border-radius: 10px;
+  padding: 5px 11px;
 }
-
-
 
 .whitebox {
-
-    border: 4px solid black;
-    border-radius: 10px;
-    padding: 5px 11px;
+  border: 4px solid black;
+  border-radius: 10px;
+  padding: 5px 11px;
 }
 
 textarea {
-
-    border: 4px solid black;
-    border-radius: 10px;
-    padding: 5px 11px;
-
-
+  border: 4px solid black;
+  border-radius: 10px;
+  padding: 5px 11px;
 }
-
-
-
 
 .thumbnail {
-
-    border: 4px solid black;
-    border-radius: 10px;
-
+  border: 4px solid black;
+  border-radius: 10px;
 }
-.btn-customi, .btn-customii {
+.btn-customi,
+.btn-customii {
   border: 4px solid black;
   color: white;
   padding: 10px 22px;
@@ -110,119 +88,125 @@ textarea {
 }
 
 .boxed {
-
-    background: white; /* use your color here */
-    border: 2px solid black;
+  background: white; /* use your color here */
+  border: 2px solid black;
 }
-
 
 .btn {
-      color:black;
-    }
-
-
+  color: black;
+}
 
 a {
-color: #ff7000;
+  color: #ff7000;
 }
 a:link {
-color: #ff7000;
+  color: #ff7000;
 }
 a:hover {
-color: white;
+  color: white;
 }
 
-
 .cols {
-    display: flex;
+  display: flex;
 }
 
 .rows {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .marginalized > *:not(:last-child) {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .whitebox {
-    margin: 10px;
-    background: white;
+  margin: 10px;
+  background: white;
 }
 
-.h100 { height: 100%; }
+.h100 {
+  height: 100%;
+}
 
-.w100 { width: 100%; }
-.w20 { width: 20%; }
-.w60 { width: 60%; }
-.w80 { width: 80%; }
-.w33 { width: 33%; }
+.w100 {
+  width: 100%;
+}
+.w20 {
+  width: 20%;
+}
+.w60 {
+  width: 60%;
+}
+.w80 {
+  width: 80%;
+}
+.w33 {
+  width: 33%;
+}
 
 .orange {
-    background: #ff7000;
+  background: #ff7000;
 }
 
 .textarea {
-    resize: none;
-    width: 95%;
-    height: 95%;
+  resize: none;
+  width: 95%;
+  height: 95%;
 }
 
 .centered {
-    justify-content: center;
+  justify-content: center;
 }
 
 .vcentered {
-    align-items: center;
+  align-items: center;
 }
 
 .error {
-    color: #D8000C;
-    background-color: #FFBABA;
-    font-weight: 800;
-    border-radius:.5em;
-    border: 4px solid;
-    padding: 4px 12px;
-    box-shadow:1px 1px 3px #888;
-
+  color: #d8000c;
+  background-color: #ffbaba;
+  font-weight: 800;
+  border-radius: 0.5em;
+  border: 4px solid;
+  padding: 4px 12px;
+  box-shadow: 1px 1px 3px #888;
 }
 
 .r {
-    text-align: right;
+  text-align: right;
 }
 
 .l {
-    text-align: left;
+  text-align: left;
 }
 
 .c {
-    text-align: center;
+  text-align: center;
 }
 
 .small {
-    font-size: 0.75em;
+  font-size: 0.75em;
 }
 
 .scroll {
-    overflow: auto;
+  overflow: auto;
 }
 
 .hidden-overflow {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .some-height {
-    height: 600px;
+  height: 600px;
 }
 
 .someother-height {
-    min-height: 300px;
+  min-height: 300px;
 }
 .equal-width {
-    flex-grow: 1;
-    flex-basis: 0;
+  flex-grow: 1;
+  flex-basis: 0;
 }
 .padding-b7 {
-    padding-bottom: 7%;
+  padding-bottom: 7%;
 }
