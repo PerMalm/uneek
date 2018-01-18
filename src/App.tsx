@@ -497,7 +497,7 @@ export const App = (store: Store<State>) => {
                 .filter(k => store.at('show_syntax').get() || !k.startsWith('syn.shallow.'))
                 .map(k => (
                   <button key={k} onClick={() => store.at('key').set(k)} disabled={k === state.key}>
-                    k
+                    {k}
                   </button>
                 ))}
             </div>
