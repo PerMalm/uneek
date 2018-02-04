@@ -1,5 +1,9 @@
 # Uneek
 
+Test Uneek at the following address: https://permalm.github.io/permalm-github.io/
+
+or
+
 For local testing:
 ```
 yarn install
