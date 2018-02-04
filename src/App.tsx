@@ -506,10 +506,10 @@ export const App = (store: Store<State>) => {
             <div className="h100 thumbnail centered vcentered cols">{centered_logo}</div>
           ) : (
             <div className="cols h100 marginalized">
-              {state.show_uniqueness && count('A-B', only((a, b) => b == 0), 'a-only')}
+              {state.show_uniqueness && count('A - B', only((a, b) => b == 0), 'a-only')}
               {state.show_intersection &&
                 count('A ∩ B', only((a, b) => a > 0 && b > 0), 'intersection')}
-              {state.show_uniqueness && count('B-A', only((a, b) => a == 0), 'b-only')}
+              {state.show_uniqueness && count('B - A', only((a, b) => a == 0), 'b-only')}
             </div>
           )}
         </div>
