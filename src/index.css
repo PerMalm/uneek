@@ -123,6 +123,10 @@ a:hover {
   margin: 10px;
   background: white;
 }
+.h400px {
+  height: 100% !important;
+  width: 100% !important;
+}
 
 .h100 {
   height: 100%;
@@ -209,4 +213,7 @@ a:hover {
 }
 .padding-b7 {
   padding-bottom: 7%;
+}
+.copyright {
+  text-align: center;
 }
