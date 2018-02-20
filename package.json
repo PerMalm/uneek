@@ -33,7 +33,8 @@
     "build": "parcel build index.html",
     "pretest": "tsc",
     "prettier": "prettier --list-different --write \"{src,test}/**/*.{css,ts{,x}}\"",
-    "test": "tape dist/test/*.js | tap-diff"
+    "test": "tape dist/test/*.js | tap-diff",
+    "deploy": "gh-pages -d dist"
   },
   "prettier": {
     "printWidth": 100,
