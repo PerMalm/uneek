@@ -108,7 +108,8 @@ export const App = (store: Store<State>) => {
   const global = window as any
   global.store = store
   global.reset = () => store.set(init)
-  store.storage_connect('uneek')
+  const length_limit = 1000000
+  store.storage_connect('uneek', state => JSON.stringify(state).length < length_limit)
   store.at('xml_input').ondiff(b => {
     if (!b && store.get().key != 'text') {
       store.update({key: 'text'})
@@ -526,19 +527,12 @@ Karp is an open lexical infrastructure and a web based tool for searching, explo
                     const fr = new FileReader()
                     const text = fr.readAsText(file)
                     fr.onloadend = (ev: ProgressEvent) => {
-                       if (fr.result.length > 5000000) {
-	  				     store.at(name).set('We regret to inform you that the file is too large (approximately larger then 5 mb). We intend to fix this issue soon.')
-					     errs[name]
-	  				     console.log('too long')
-	  				   }
-                       else {
-                        if (fr.readyState == fr.DONE) {
-                          store.at(name).set(fr.result)
+                      if (fr.readyState == fr.DONE) {
+                        store.at(name).set(fr.result)
                       }
                     }
                   }
                 }}
-                }
               />
             </label>
             <button className="btn btn-customii" onClick={() => store.at(name).set('')}>
