@@ -7,13 +7,9 @@ import {Store, Lens, Omit} from 'reactive-lens'
 const logo = require('./images/nerlog.svg')
 const center = require('./images/uneekCenter.svg')
 const logotop = require('./images/slimlog.svg')
+const doc1 = require('./images/doc1.pdf')
 
 // dokumentation: tag(tagnamn.klass.klass..., attribut, namn)
-
-//const doc = require('src/images/latextemplates.pdf')
-// TODO fixa buggen!!
-const doc = 'images/latextempates.pdf'
-
 
 // const sb: string = require('./sb.png')
 
@@ -120,100 +116,142 @@ export const App = (store: Store<State>) => {
 
   const routes: Record<string, VNode> = {
     links: (
-      <div className='whitebox container'>		
+      <div className="whitebox container">
         <h2>Useful Links</h2>
         <h3>Automatic Annotation Tools</h3>
-		
-		<dl>
-		  <dt><a href="https://spraakbanken.gu.se/sparv">Sparv</a></dt>
-		  <dd>
-Sparv is Språkbanken’s corpus annotation pipeline infrastructure. The easiest way to use the pipeline is from its web interface with a plain text document. The pipeline uses in-house and external tools on the text to segment it into sentences and paragraphs, tokenise, tag parts-of-speech, look up in dictionaries and analyse compounds. The pipeline can also be run using a web API with XML results, and it is run locally at Språkbanken to prepare the documents in Korp, Språkbanken's corpus search tool. While the most sophisticated support is for modern Swedish, the pipeline supports 15 languages.
-		  </dd>
 
-		</dl>
-		
-				<dl>
-				  <dt><a href="http://stp.lingfil.uu.se/swegram/">SWEGRAM</a></dt>
-				  <dd>
-		SWEGRAM is a web-based tool for the automatic linguistic annotation and quantitative analysis of Swedish text, enabling researchers in the humanities and social sciences to annotate their own text and produce statistics on linguistic and other text-related features on the basis of this annotation. The tool allows users to upload one or several documents, which are automatically fed into a pipeline of tools for tokenization and sentence segmentation, spell checking, part-of-speech tagging and morpho-syntactic analysis as well as dependency parsing for syntactic annotation of sentences. The analyzer provides statistics on the number of tokens, words and sentences, the number of parts of speech (PoS), readability measures, the average length of various units, and frequency lists of tokens, lemmas, PoS, and spelling errors. SWEGRAM allows users to create their own corpus or compare texts on various linguistic levels.
-				  </dd>
-				</dl>
-		
-		
-		
-		
+        <dl>
+          <dt>
+            <a href="https://spraakbanken.gu.se/sparv">Sparv</a>
+          </dt>
+          <dd>
+            Sparv is Språkbanken’s corpus annotation pipeline infrastructure. The easiest way to use
+            the pipeline is from its web interface with a plain text document. The pipeline uses
+            in-house and external tools on the text to segment it into sentences and paragraphs,
+            tokenise, tag parts-of-speech, look up in dictionaries and analyse compounds. The
+            pipeline can also be run using a web API with XML results, and it is run locally at
+            Språkbanken to prepare the documents in Korp, Språkbanken's corpus search tool. While
+            the most sophisticated support is for modern Swedish, the pipeline supports 15
+            languages.
+          </dd>
+        </dl>
+
+        <dl>
+          <dt>
+            <a href="http://stp.lingfil.uu.se/swegram/">SWEGRAM</a>
+          </dt>
+          <dd>
+            SWEGRAM is a web-based tool for the automatic linguistic annotation and quantitative
+            analysis of Swedish text, enabling researchers in the humanities and social sciences to
+            annotate their own text and produce statistics on linguistic and other text-related
+            features on the basis of this annotation. The tool allows users to upload one or several
+            documents, which are automatically fed into a pipeline of tools for tokenization and
+            sentence segmentation, spell checking, part-of-speech tagging and morpho-syntactic
+            analysis as well as dependency parsing for syntactic annotation of sentences. The
+            analyzer provides statistics on the number of tokens, words and sentences, the number of
+            parts of speech (PoS), readability measures, the average length of various units, and
+            frequency lists of tokens, lemmas, PoS, and spelling errors. SWEGRAM allows users to
+            create their own corpus or compare texts on various linguistic levels.
+          </dd>
+        </dl>
+
         <h3>Corpora and Concordance Tools</h3>
-		
-	   		<dl>
-	   		  <dt><a href="https://spraakbanken.gu.se/korp">Korp</a></dt>
-	   		  <dd>
-Korp is Språkbanken's corpus tool which among other things lets you view concordances in a vast amount of corpora (mostly Swedish).
-	   		  </dd>
-	   		</dl>
-				   		<dl>
-				   		  <dt><a href="https://corpus.byu.edu/coca/">The Corpus of Contemporary American English</a></dt>
-				   		  <dd>
-The Corpus of Contemporary American English (COCA) is the largest freely-available corpus of English, and the only large and balanced corpus of American English. 				   		  </dd>
 
-				   		</dl>
-			
-	         <h3>Grammatical Frameworks</h3>
-		
-	 	   		<dl>
-	 	   		  <dt><a href="http://universaldependencies.org/">Universal Dependencies</a></dt>
-	 	   		  <dd>
-	 	   Universal Dependencies (UD) is a framework for cross-linguistically consistent grammatical annotation and an open community effort with over 200 contributors producing more than 100 treebanks in over 60 languages.
-	 	   		  </dd>
+        <dl>
+          <dt>
+            <a href="https://spraakbanken.gu.se/korp">Korp</a>
+          </dt>
+          <dd>
+            Korp is Språkbanken's corpus tool which among other things lets you view concordances in
+            a vast amount of corpora (mostly Swedish).
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <a href="https://corpus.byu.edu/coca/">The Corpus of Contemporary American English</a>
+          </dt>
+          <dd>
+            The Corpus of Contemporary American English (COCA) is the largest freely-available
+            corpus of English, and the only large and balanced corpus of American English.{' '}
+          </dd>
+        </dl>
 
-	 	   		</dl>
-	         <h3>Lexical Resources</h3>
-		
-	 	   		<dl>
-	 	   		  <dt><a href="https://framenet.icsi.berkeley.edu/fndrupal/">FrameNet</a></dt>
-	 	   		  <dd>
-		   The FrameNet project is building a lexical database of English that is both human- and machine-readable, based on annotating examples of how words are used in actual texts. From the student's point of view, it is a dictionary of more than 13,000 word senses, most of them with annotated examples that show the meaning and usage. For the researcher in Natural Language Processing, the more than 200,000 manually annotated sentences linked to more than 1,200 semantic frames provide a unique training dataset for semantic role labeling, used in applications such as information extraction, machine translation, event recognition, sentiment analysis, etc.
-	 	   
-	 	   		  </dd>
+        <h3>Grammatical Frameworks</h3>
 
-	 	   		</dl>
-	 	 	   		<dl>
-	 	 	   		  <dt><a href="https://spraakbanken.gu.se/karp">Karp</a></dt>
-	 	 	   		  <dd>
-Karp is an open lexical infrastructure and a web based tool for searching, exploring and developing lexical resources. Språkbanken currently hosts a number of lexicons (mostly Swedish) in Karp and on-going work aims at broadening the type of resources that can be developed in the system. Karp also hosts the Swedish FrameNet and the Swedish Constructicon.
-	 	   
-	 	 	   		  </dd>
+        <dl>
+          <dt>
+            <a href="http://universaldependencies.org/">Universal Dependencies</a>
+          </dt>
+          <dd>
+            Universal Dependencies (UD) is a framework for cross-linguistically consistent
+            grammatical annotation and an open community effort with over 200 contributors producing
+            more than 100 treebanks in over 60 languages.
+          </dd>
+        </dl>
+        <h3>Lexical Resources</h3>
 
-	 	 	   		</dl>
-				
-	
+        <dl>
+          <dt>
+            <a href="https://framenet.icsi.berkeley.edu/fndrupal/">FrameNet</a>
+          </dt>
+          <dd>
+            The FrameNet project is building a lexical database of English that is both human- and
+            machine-readable, based on annotating examples of how words are used in actual texts.
+            From the student's point of view, it is a dictionary of more than 13,000 word senses,
+            most of them with annotated examples that show the meaning and usage. For the researcher
+            in Natural Language Processing, the more than 200,000 manually annotated sentences
+            linked to more than 1,200 semantic frames provide a unique training dataset for semantic
+            role labeling, used in applications such as information extraction, machine translation,
+            event recognition, sentiment analysis, etc.
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <a href="https://spraakbanken.gu.se/karp">Karp</a>
+          </dt>
+          <dd>
+            Karp is an open lexical infrastructure and a web based tool for searching, exploring and
+            developing lexical resources. Språkbanken currently hosts a number of lexicons (mostly
+            Swedish) in Karp and on-going work aims at broadening the type of resources that can be
+            developed in the system. Karp also hosts the Swedish FrameNet and the Swedish
+            Constructicon.
+          </dd>
+        </dl>
       </div>
     ),
 
     news: (
-      <div className='whitebox container'>
+      <div className="whitebox container">
         <h2>Launchday!</h2>
-      The first version of Uneek is now up and running. In a nutshell, Uneek is a program that does what linguists often do: (i) look for differences or similarities between two texts, (ii) sort these out, (iii) and summarize them. If you experience technical problems, create an issue at <a href="https://github.com/PerMalm/uneek/issues">GitHub</a>, or send us an <a href="mailto:per.malm@nordiska.uu.se?subject=Sent%20from%20Uneek%20site:">email</a> with a clear description of your problem. <br/>
-			  <br/>
-			 We are aware of the following issues at this moment:			  <br/>
- <br/>
-          <ul>
-			 
-			  <li>
-                            Uneek looks quite awful with some web browsers, but it works fine with modern web browsers such as <a href="https://www.google.se/chrome/">Google Chrome</a> or <a href="https://www.mozilla.org/">Mozilla Firefox</a>
-                          </li>
-			  <li> There is currently a limitation on the size of the input files (approximately 5 megabytes).
-                          </li>
-			  <li> As of now, there is no documentation available. 
-                          </li>
-		          </ul>
-		 <br/>
- 		<em>Posted by Per Malm, February 11th, 2018.</em>
-		 
+        The first version of Uneek is now up and running. In a nutshell, Uneek is a program that
+        does what linguists often do: (i) look for differences or similarities between two texts,
+        (ii) sort these out, (iii) and summarize them. If you experience technical problems, create
+        an issue at <a href="https://github.com/PerMalm/uneek/issues">GitHub</a>, or send us an{' '}
+        <a href="mailto:per.malm@nordiska.uu.se?subject=Sent%20from%20Uneek%20site:">email</a> with
+        a clear description of your problem. <br />
+        <br />
+        We are aware of the following issues at this moment: <br />
+        <br />
+        <ul>
+          <li>
+            Uneek looks quite awful with some web browsers, but it works fine with modern web
+            browsers such as <a href="https://www.google.se/chrome/">Google Chrome</a> or{' '}
+            <a href="https://www.mozilla.org/">Mozilla Firefox</a>
+          </li>
+          <li>
+            {' '}
+            There is currently a limitation on the size of the input files (approximately 5
+            megabytes).
+          </li>
+          <li> As of now, there is no documentation available.</li>
+        </ul>
+        <br />
+        <em>Posted by Per Malm, February 11th, 2018.</em>
       </div>
     ),
   }
 
-  const centered_logo = <img className="h400px" alt="Logga" src={center}/>
+  const centered_logo = <img className="h400px" alt="Logga" src={center} />
 
   const above = (
     <nav key="above" className="navbar navbar-default navbar-inverse">
@@ -249,7 +287,7 @@ Karp is an open lexical infrastructure and a web based tool for searching, explo
               <a href="#news">News</a>
             </li>
             <li>
-              <a href={doc} download="uneek-documentation.pdf">
+              <a href={doc1} download="./images/doc1.pdf">
                 Documentation
               </a>
             </li>
@@ -283,8 +321,13 @@ Karp is an open lexical infrastructure and a web based tool for searching, explo
                     </button>
                   </div>
                   <div className="modal-body">
-                    Malm, P., Ahlberg, M., & Rosén, D. (2018, May). Title here . In  (pp.
-                    xxx-xxx).
+                    Malm, P., Ahlberg, M., & Rosén, D. (fourthcoming). Uneek: a Web Tool for
+                    Comparative Analysis of Annotated Texts. In{' '}
+                    <em>
+                      {' '}
+                      Proceedings of the IFNW 2018 Workshop on Multilingual FrameNets and
+                      Constructicons at LREC 2018
+                    </em>. Miyazaki: ELRA.
                   </div>
                   <div className="modal-footer">
                     {
@@ -348,11 +391,25 @@ Karp is an open lexical infrastructure and a web based tool for searching, explo
             <span className="glyphicon glyphicon-info-sign" /> Suggestions
           </h4>
           <ul>
- <li>This tool is under development; so are the methods and thoughts revolving around it. See the <a href="#">News</a> section for relevant updates. </li>
-          <li>See the <a href="#">Documentation</a> for how to use the tool, for methods, and for technical information.</li>
-          <li>If you experience problems, create an issue at <a href="https://github.com/PerMalm/uneek/issues">GitHub</a>, or send us an <a href="mailto:per.malm@nordiska.uu.se?subject=Sent%20from%20Uneek%20site:">email</a>.</li>
-          <li> Check out the <a href="#">Useful links</a> for some, well, useful stuff, such as parsers, concordance tools, etc.</li>
-          <li> Processing large files may take some time; be patient.</li>
+            <li>
+              This tool is under development; so are the methods and thoughts revolving around it.
+              See the <a href="#news">News</a> section for relevant updates.{' '}
+            </li>
+            <li>
+              See the <a href={doc1}>Documentation</a> for how to use the tool, for methods, and for
+              technical information.
+            </li>
+            <li>
+              If you experience problems, create an issue at{' '}
+              <a href="https://github.com/PerMalm/uneek/issues">GitHub</a>, or send us an{' '}
+              <a href="mailto:per.malm@nordiska.uu.se?subject=Sent%20from%20Uneek%20site:">email</a>.
+            </li>
+            <li>
+              {' '}
+              Check out the <a href="#links">Useful links</a> for related useful things such as
+              parsers, concordance tools, etc.
+            </li>
+            <li> Processing large files may take some time; be patient.</li>
           </ul>
         </div>
         <div className="col-md-4" style={{paddingRight: 0}}>
@@ -369,7 +426,7 @@ Karp is an open lexical infrastructure and a web based tool for searching, explo
                 <li>intersectional analysis</li>
                 <li>shallow analysis </li>
               </ul>
-                Results come in a csv-file (comma separated value) sorted by absolute frequency.
+              Results come in a csv-file (comma separated value) sorted by absolute frequency.
             </div>
             <div>
               <hr />
@@ -388,9 +445,9 @@ Karp is an open lexical infrastructure and a web based tool for searching, explo
                 }}>
                 Clear All Fields
               </button>
+            </div>
           </div>
         </div>
-      </div>
       </div>
 
       <footer>
@@ -398,10 +455,14 @@ Karp is an open lexical infrastructure and a web based tool for searching, explo
           <div className="container">
             <div className="row">
               <div className="col-md-4 l-posts">
-                <h3 className="link">
+                <h3 className="link">License</h3>
+                <p>
                   {' '}
-                  <img alt="Logga" src={logo} height="100px" />
-                </h3>
+                  2018 Per Malm |
+                  <a target="_blank" rel="nofollow" href="https://opensource.org/licenses/MIT">
+                    MIT-license
+                  </a>
+                </p>
               </div>
               <div className="col-md-4 f-about">
                 <h3 className="link">Remember</h3>
@@ -422,19 +483,6 @@ Karp is an open lexical infrastructure and a web based tool for searching, explo
                     Per Malm
                   </a>
                 </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="last-div">
-          <div className="container">
-            <div className="row">
-              <div className="copyright">
-                 2018 Per Malm |
-                <a target="_blank" rel="nofollow" href="https://opensource.org/licenses/MIT">
-                  MIT-license
-                </a>
               </div>
             </div>
           </div>
