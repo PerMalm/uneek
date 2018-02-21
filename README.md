@@ -13,7 +13,7 @@ yarn run start
 
 (`yarn` can be replaced with `npm`)
 
-# Buildin and deploying
+# Building and deploying
 
 For building:
 ```
