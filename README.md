@@ -20,7 +20,9 @@ For building:
 yarn run build
 ```
 
-Output is in the `dist/` directory.
+Output is in the `dist/` directory. You can remove this directory before building in case you think you have old versions around: `rm -rf dist/`
+
+You can check if building worked by opening the page in the dist directory: `firefox dist/index.html`
 
 To deploy:
 
