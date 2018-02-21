@@ -14,7 +14,17 @@ yarn run start
 
 (`yarn` can be replaced with `npm`)
 
-# Building and deploying
+## Before committing
+
+This will reformat all your code to become beautiful:
+
+```
+yarn run prettier
+```
+
+This could potentially make merging with other people's code more complicated. If you're anticipating a merge then try to make sure that you either both run prettier or you that both don't.
+
+## Building and deploying
 
 For building:
 ```
