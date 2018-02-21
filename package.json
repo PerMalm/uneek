@@ -30,7 +30,7 @@
   },
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html",
+    "build": "parcel build index.html --public-url ./",
     "pretest": "tsc",
     "prettier": "prettier --list-different --write \"{src,test}/**/*.{css,ts{,x}}\"",
     "test": "tape dist/test/*.js | tap-diff"
