@@ -14,7 +14,22 @@ body {
   height: 100%;
 }
 
+.license {
+  text-align: left;
+}
+
+.f-about {
+  text-align: center;
+}
+
+.f-contact {
+  text-align: right;
+}
+
 div.h100.thumbnail.centered.vcentered.rows {
+  background: #ff7000;
+}
+div.h100.thumbnail.centered.vcentered.cols {
   background: #ff7000;
 }
 
@@ -103,7 +118,7 @@ a:link {
   color: #ff7000;
 }
 a:hover {
-  color: white;
+  color: grey;
 }
 
 .cols {
@@ -126,6 +141,7 @@ a:hover {
 .h400px {
   height: 100% !important;
   width: 100% !important;
+  background: #ff7000;
 }
 
 .h100 {
