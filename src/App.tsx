@@ -115,6 +115,21 @@ export const App = (store: Store<State>) => {
   Store.location_connect(store.at('location'))
 
   const routes: Record<string, VNode> = {
+    about: (
+      <div>
+        <div className="whitebox container w60 padding3 centerdiv margin-b5">
+          <h2>Use reference below</h2>
+                    Malm, P., Ahlberg, M., & Rosén, D. (fourthcoming). Uneek: a Web Tool for
+                    Comparative Analysis of Annotated Texts. In{' '}
+                    <em>
+                      {' '}
+                      Proceedings of the IFNW 2018 Workshop on Multilingual FrameNets and
+                      Constructicons at LREC 2018
+                    </em>. Miyazaki: ELRA.
+          </div>
+    </div>
+           ),
+
     links: (
       <div className="whitebox container">
         <h2>Useful Links</h2>
@@ -310,49 +325,11 @@ export const App = (store: Store<State>) => {
               <a href="#links">Useful Links</a>
             </li>
             <li>
-              <a href="#" data-target="#exampleModal" data-toggle="modal">
+              <a href="#about">
                 Refer to Uneek
               </a>
             </li>
 
-            {
-              // <!-- Modal -->
-            }
-            <div
-              className="modal fade"
-              id="exampleModal"
-              tabIndex={-1}
-              role="dialog"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true">
-              <div className="modal-dialog" role="document">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">
-                      Use reference below.
-                    </h5>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div className="modal-body">
-                    Malm, P., Ahlberg, M., & Rosén, D. (fourthcoming). Uneek: a Web Tool for
-                    Comparative Analysis of Annotated Texts. In{' '}
-                    <em>
-                      {' '}
-                      Proceedings of the IFNW 2018 Workshop on Multilingual FrameNets and
-                      Constructicons at LREC 2018
-                    </em>. Miyazaki: ELRA.
-                  </div>
-                  <div className="modal-footer">
-                    {
-                      // <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                      // <button type="button" className="btn btn-primary">Save changes</button> -->
-                    }
-                  </div>
-                </div>
-              </div>
-            </div>
           </ul>
         </div>
       </div>

@@ -230,6 +230,15 @@ a:hover {
 .padding-b7 {
   padding-bottom: 7%;
 }
+.padding3 {
+  padding: 3%;
+}
 .copyright {
   text-align: center;
+}
+.centerdiv {
+  margin: 0 auto;
+}
+.margin-b5 {
+  margin-bottom: 5%;
 }
