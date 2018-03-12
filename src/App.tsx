@@ -112,7 +112,7 @@ export const App = (store: Store<State>) => {
     }
   })
 
-  store.at('location').location_connect(s => '#' + s, s => s.slice(1))
+  Store.location_connect(store.at('location'))
 
   const routes: Record<string, VNode> = {
     links: (
