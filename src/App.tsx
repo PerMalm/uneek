@@ -221,32 +221,47 @@ export const App = (store: Store<State>) => {
     ),
 
     news: (
-      <div className="whitebox container">
-        <h2>Launchday!</h2>
-        The first version of Uneek is now up and running. In a nutshell, Uneek is a program that
-        does what linguists often do: (i) look for differences or similarities between two texts,
-        (ii) sort these out, (iii) and summarize them. If you experience technical problems, create
-        an issue at <a href="https://github.com/PerMalm/uneek/issues">GitHub</a>, or send us an{' '}
-        <a href="mailto:per.malm@nordiska.uu.se?subject=Sent%20from%20Uneek%20site:">email</a> with
-        a clear description of your problem. <br />
-        <br />
-        We are aware of the following issues at this moment: <br />
-        <br />
-        <ul>
-          <li>
-            Uneek looks quite awful with some web browsers, but it works fine with modern web
-            browsers such as <a href="https://www.google.se/chrome/">Google Chrome</a> or{' '}
-            <a href="https://www.mozilla.org/">Mozilla Firefox</a>
-          </li>
-          <li>
+      <div>
+        <div className="whitebox container">
+          <h2>Updated version</h2>
+          It is now solved, the issue concerning the size limit on the input files. Also, there is
+          now some{' '}
+          <a href={doc1} download="./images/doc1.pdf">
             {' '}
-            There is currently a limitation on the size of the input files (approximately 5
-            megabytes).
-          </li>
-          <li> As of now, there is no documentation available.</li>
-        </ul>
-        <br />
-        <em>Posted by Per Malm, February 11th, 2018.</em>
+            documentation{' '}
+          </a>{' '}
+          available for Uneek. <br />
+          <br />
+          <em>Posted by Per Malm, March 12th, 2018.</em>
+        </div>
+        <div className="whitebox container">
+          <h2>Launch day!</h2>
+          The first version of Uneek is now up and running. In a nutshell, Uneek is a program that
+          does what linguists often do: (i) look for differences or similarities between two texts,
+          (ii) sort these out, (iii) and summarize them. If you experience technical problems,
+          create an issue at <a href="https://github.com/PerMalm/uneek/issues">GitHub</a>, or send
+          us an{' '}
+          <a href="mailto:per.malm@nordiska.uu.se?subject=Sent%20from%20Uneek%20site:">email</a>{' '}
+          with a clear description of your problem. <br />
+          <br />
+          We are aware of the following issues at this moment: <br />
+          <br />
+          <ul>
+            <li>
+              Uneek looks quite awful with some web browsers, but it works fine with modern web
+              browsers such as <a href="https://www.google.se/chrome/">Google Chrome</a> or{' '}
+              <a href="https://www.mozilla.org/">Mozilla Firefox</a>
+            </li>
+            <li>
+              {' '}
+              There is currently a limitation on the size of the input files (approximately 5
+              megabytes).
+            </li>
+            <li> As of now, there is no documentation available.</li>
+          </ul>
+          <br />
+          <em>Posted by Per Malm, February 11th, 2018.</em>
+        </div>
       </div>
     ),
   }
@@ -356,13 +371,13 @@ export const App = (store: Store<State>) => {
               <div key="1" className="checkbox">
                 <label>
                   <Checkbox store={store.at('show_uniqueness')} />
-                  uniqueness differentiation [(A–B) and (B–A)]
+                  uniqueness differentiation [(<i>A − B</i>), (<i>B − A</i>)]
                 </label>
               </div>
               <div key="2" className="checkbox">
                 <label>
                   <Checkbox store={store.at('show_intersection')} />
-                  intersection analysis [A &#8745; B]
+                  intersectional analysis [<i>A &#8745; B</i>]
                 </label>
               </div>
               <hr />
@@ -428,7 +443,7 @@ export const App = (store: Store<State>) => {
               </ul>
               Results come in a csv-file (comma separated value) sorted by absolute frequency.
             </div>
-            <div>
+            <div className="marginalized">
               <hr />
               <button
                 className="btn btn-customi"
@@ -458,7 +473,6 @@ export const App = (store: Store<State>) => {
                 <h3 className="link">License</h3>
                 <p>
                   {' '}
-                  2018 Per Malm |
                   <a target="_blank" rel="nofollow" href="https://opensource.org/licenses/MIT">
                     MIT-license
                   </a>
@@ -479,8 +493,7 @@ export const App = (store: Store<State>) => {
                 <p>
                   <a href="mailto:per.malm@nordiska.uu.se?subject=Sent%20from%20Uneek%20site:">
                     <i className="fa fa-envelope" />{' '}
-                    <span className="glyphicon glyphicon-envelope" />
-                    Per Malm
+                    <span className="glyphicon glyphicon-envelope" /> Per Malm
                   </a>
                 </p>
               </div>
@@ -529,7 +542,9 @@ export const App = (store: Store<State>) => {
       <div style={{overflow: 'hidden'}} className="thumbnail equal-width">
         <div className="rows h100 centered vcentered">
           <div className="caption">
-            <h3>{name}</h3>
+            <h3>
+              <i>{name}</i>
+            </h3>
           </div>
           <div className="whitebox h100 w100 scroll">
             <div className="rows w100">
@@ -613,10 +628,10 @@ export const App = (store: Store<State>) => {
             <div className="h100 thumbnail centered vcentered cols">{centered_logo}</div>
           ) : (
             <div className="cols h100 marginalized">
-              {state.show_uniqueness && count('A - B', only((a, b) => b == 0), 'a-only')}
+              {state.show_uniqueness && count('A − B', only((a, b) => b == 0), 'a-only')}
               {state.show_intersection &&
                 count('A ∩ B', only((a, b) => a > 0 && b > 0), 'intersection')}
-              {state.show_uniqueness && count('B - A', only((a, b) => a == 0), 'b-only')}
+              {state.show_uniqueness && count('B − A', only((a, b) => a == 0), 'b-only')}
             </div>
           )}
         </div>
