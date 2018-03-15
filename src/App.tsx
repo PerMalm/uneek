@@ -528,7 +528,7 @@ export const App = (store: Store<State>) => {
               {Uneek.flat(w).map(({a, b, word}) => (
                 <div key={word} className="cols">
                   <span className="w20 r">{a > 0 && a}</span>
-                  <span className="w60 c">
+                  <span className="w60 c" style={{wordBreak: 'break-all'}}>
                     {word} {a > 0 && b > 0 && <span className="small">{a + b}</span>}
                   </span>
                   <span className="w20 l">{b > 0 && b}</span>
