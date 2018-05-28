@@ -119,12 +119,12 @@ export const App = (store: Store<State>) => {
       <div>
         <div className="whitebox container w60 padding3 centerdiv margin-b5">
           <h2>Use reference below</h2>
-          Malm, P., Ahlberg, M., & Rosén, D. (fourthcoming). Uneek: a Web Tool for Comparative
+          Malm, P., Ahlberg, M., & Rosén, D. (2018). Uneek: a Web Tool for Comparative
           Analysis of Annotated Texts. In{' '}
           <em>
             {' '}
-            Proceedings of the IFNW 2018 Workshop on Multilingual FrameNets and Constructicons at
-            LREC 2018
+            Proceedings of the LREC 2018 Workshop International FrameNetWorkshop 2018: Multilingual 
+			Framenets and Constructicons. p 33–36
           </em>. Miyazaki: ELRA.
         </div>
       </div>
