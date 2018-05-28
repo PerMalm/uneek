@@ -123,7 +123,7 @@ export const App = (store: Store<State>) => {
           Analysis of Annotated Texts. In{' '}
           <em>
             {' '}
-            Proceedings of the LREC 2018 Workshop International FrameNetWorkshop 2018: Multilingual 
+            Proceedings of the LREC 2018 Workshop International FrameNet Workshop 2018: Multilingual 
 			Framenets and Constructicons. p 33–36
           </em>. Miyazaki: ELRA.
         </div>
